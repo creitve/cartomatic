@@ -1,0 +1,16 @@
+- name: loading upstreams
+  template:
+    src=etc/nginx/upstream.conf.j2
+    dest=/etc/nginx/upstream.conf
+  tags:
+    - nginx
+
+- name: loading virtual hosts
+  template:
+    src=etc/nginx/vhost.d/default.conf.j2
+    dest=/etc/nginx/vhost.d/{{ item.key }}.conf
+  notify:
+    - nginx-restarted
+  with_dict: projects
+  tags:
+    - nginx

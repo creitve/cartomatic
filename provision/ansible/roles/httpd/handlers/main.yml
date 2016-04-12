@@ -1,0 +1,21 @@
+---
+
+- name: httpd-enabled
+  service:
+    name={{ httpd_service }}
+    enabled=yes
+
+- name: httpd-started
+  service:
+    name={{ httpd_service }}
+    state=started
+
+- name: httpd-stopped
+  service:
+    name={{ httpd_service }}
+    state=stopped
+
+- name: httpd-restarted
+  service:
+    name={{ httpd_service }}
+    state=restarted

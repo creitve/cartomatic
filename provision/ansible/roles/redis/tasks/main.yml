@@ -1,0 +1,25 @@
+---
+
+- name: installing packages
+  yum:
+    name={{ item }}
+    state=latest
+  notify:
+    - redis-enabled
+  with_items: redis_packages
+  tags:
+    - redis
+
+- name: copying config
+  template:
+    src=etc/{{ item }}.j2
+    dest=/etc/{{ item }}
+    owner=redis
+    group=redis
+    mode=640
+  notify:
+    - redis-restarted
+  with_items:
+    - redis.conf
+  tags:
+    - redis

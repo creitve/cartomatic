@@ -1,0 +1,45 @@
+[mysqld_safe]
+socket          = {{ mariadb_socket|default("/var/lib/mysql/mysql.sock") }}
+nice            = 0
+
+[mysqld]
+user            = mysql
+bind-address    = {{ mariadb_host|default("0.0.0.0") }}
+pid             = {{ mariadb_pid|default("/var/lib/mysql/mysql.pid") }}
+socket          = {{ mariadb_socket|default("/var/lib/mysql/mysql.sock") }}
+port            = {{ mariadb_port|default('3306') }}
+basedir         = /usr
+datadir         = /var/lib/mysql
+tmpdir          = /tmp
+
+skip-name-resolve
+skip-external-locking
+low-priority-updates
+log-queries-not-using-indexes
+
+interactive_timeout   = {{ mariadb_interactive_timeout|default("60") }}
+wait_timeout          = {{ mariadb_wait_timeout|default("60") }}
+connect_timeout       = {{ mariadb_connect_timeout|default("10") }}
+net_read_timeout      = {{ mariadb_net_read_timeout|default("30") }}
+net_write_timeout     = {{ mariadb_net_write_timeout|default("30") }}
+
+key_buffer            = {{ mariadb_key_buffer|default("64") }}M
+max_allowed_packet    = {{ mariadb_max_allowed_packet|default("128") }}M
+myisam-recover        = BACKUP
+query_cache_type      = {{ mariadb_query_cache_type|default("1") }}
+query_cache_limit     = {{ mariadb_query_cache_limit|default("2") }}M
+query_cache_size      = {{ mariadb_query_cache_size|default("128") }}M
+
+max_connections       = {{ mariadb_max_connections|default("100") }}
+sort_buffer_size      = {{ mariadb_sort_buffer_size|default("2") }}M
+read_buffer_size      = {{ mariadb_read_buffer_size|default("128") }}K
+read_rnd_buffer_size  = {{ mariadb_read_rnd_buffer_size|default("1") }}M
+join_buffer_size      = {{ mariadb_join_buffer_size|default("2") }}M
+thread_stack          = {{ mariadb_thread_stack|default("192") }}K
+thread_cache_size     = {{ mariadb_thread_cache_size|default("8") }}
+
+general_log           = {{ mariadb_general_log|default("0") }}
+general_log_file      = {{ mariadb_general_log_file|default("/var/lib/mysql/general.log") }}
+slow_query_log        = {{ mariadb_slow_query_log|default("0") }}
+slow_query_log_file   = {{ mariadb_slow_query_log_file|default("/var/lib/mysql/slow-queries.log") }}
+long_query_time       = {{ mariadb_long_query_time|default("2") }}

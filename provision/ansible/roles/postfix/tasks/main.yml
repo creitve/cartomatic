@@ -1,0 +1,23 @@
+- name: uninstalling sendmail
+  yum:
+    pkg=sendmail
+    state=absent
+  tags:
+   - mail
+
+- name: installing packages
+  yum:
+    pkg={{ item }}
+    state=installed
+  with_items: postfix_packages
+  notify: postfix-enabled
+  tags:
+   - mail
+
+- name: loading main configuration
+  template:
+    src=main.cf.j2
+    dest=/etc/postfix/main.cf
+  notify: postfix-restarted
+  tags:
+    - mail

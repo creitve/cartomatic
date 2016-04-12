@@ -1,6 +1,0 @@
-- name: loading main configuration
-  template:
-    src=main.cf.j2
-    dest=/etc/postfix/main.cf
-  tags:
-    - mail

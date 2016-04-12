@@ -1,0 +1,7 @@
+- name: installing packages
+  yum:
+    pkg={{ item }}
+    state=latest
+  with_items: phpmyadmin_packages
+  tags:
+    - phpmyadmin

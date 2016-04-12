@@ -1,3 +1,0 @@
----
-dependencies:
-  - { role: php7/common }

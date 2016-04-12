@@ -1,0 +1,12 @@
+common_packages:
+  - htop
+  - mc
+  - tmux
+  - vim
+  - unzip
+  - lsof
+  - sudo
+  - tcpdump
+  - iotop
+  - libselinux-python
+  - logrotate

@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+###############################################################################
+
+NORMAL=0
+BOLD=1
+UNDERLINE=4
+RED=31
+GREEN=32
+BROWN=33
+BLUE=34
+MAGENTO=35
+CYAN=36
+GREY=37
+
+###############################################################################
+
+show() {
+  if [[ "$SHELL" == "/bin/bash" ]] ; then
+    if [[ -n "$2" && -z "$(no_colors)" ]] ; then
+        echo -e "\e[${2}m${1}\e[0m"
+    else
+        echo -e "$1"
+    fi
+  else
+    echo -e "$1"
+  fi
+}
+
+###############################################################################
+
+lint_validate() {
+  local playbook="$1"
+  ansible-lint "$playbook" >/dev/null
+  status=$?
+  if [[ ! $status -eq 0 ]] ; then
+    show "    Error: $playbook is corrupted." && exit 1
+  else
+    show "    Done: $playbook is well formatted." $NORMAL
+  fi
+}
+
+lint_check() {
+  local provision_path="$1"
+  pushd "$provision_path" &>/dev/null
+    playbooks=`find . -maxdepth 1 -type f -name '*.yml'`
+    if [[ "$playbooks" == "" ]] ; then
+      show "    Warning: nothing to check" $BROWN
+    else
+      for playbook in $playbooks ; do
+          playbook=`basename $playbook`
+          lint_validate "$playbook"
+      done
+    fi
+  popd &>/dev/null
+}
+
+###############################################################################
+
+syntax_validate() {
+  local playbook="$1"
+  local extra_vars="$2"
+  local inventory="$3"
+  ansible-playbook --syntax-check --list-tasks -e "$extra_vars" -i "$inventory" "$playbook" >/dev/null
+  status=$?
+  if [[ ! $status -eq 0 ]] ; then
+    show "    Error: $playbook is corrupted." && exit 1
+  else
+    show "    Done: $playbook is well formatted." $NORMAL
+  fi
+}
+
+syntax_check() {
+  local provision_path="$1"
+  local extra_vars="$2"
+  local inventory="$3"
+  pushd "$provision_path" &>/dev/null
+    playbooks=`find . -maxdepth 1 -type f -name '*.yml'`
+    if [[ "$playbooks" == "" ]] ; then
+      show "    Warning: nothing to check" $BROWN
+    else
+      for playbook in $playbooks ; do
+          playbook=`basename $playbook`
+          syntax_validate "$playbook" "$extra_vars" "$inventory"
+      done
+    fi
+  popd &>/dev/null
+}
+
+###############################################################################
+
+main() {
+  local provision_path="${1:-provision/ansible}"
+  local extra_vars="${2:-config/auto.json}"
+  local inventory="${3:-inventory}"
+
+  show "==> Running ansible linter\n" $BOLD
+
+  show "    Checking syntax" $BOLD
+  syntax_check "$provision_path" "$extra_vars" "$inventory"
+  echo
+
+  show "    Checking the playbooks" $BOLD
+  lint_check "$provision_path"
+  echo
+
+  show "All tests have been passed." $GREEN
+}
+
+###############################################################################
+
+main "$@"

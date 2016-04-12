@@ -1,0 +1,2 @@
+basic_packages:
+  - https://release.yum.gongled.me/gongled-release-{{ ansible_distribution_major_version }}.noarch.rpm

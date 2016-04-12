@@ -1,0 +1,9 @@
+[mariadb]
+name = MariaDB
+{% if ansible_architecture == "x86_64" %}
+baseurl = http://yum.mariadb.org/10.1/centos{{ ansible_distribution_major_version }}-amd64
+{% else %}
+baseurl = http://yum.mariadb.org/10.1/centos{{ ansible_distribution_major_version }}-x86
+{% endif %}
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1

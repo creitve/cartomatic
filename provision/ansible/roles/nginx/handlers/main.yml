@@ -1,0 +1,21 @@
+---
+
+- name: nginx-enabled
+  service:
+    name={{ nginx_service }}
+    enabled=yes
+
+- name: nginx-started
+  service:
+    name={{ nginx_service }}
+    state=started
+
+- name: nginx-stopped
+  service:
+    name={{ nginx_service }}
+    state=stopped
+
+- name: nginx-restarted
+  service:
+    name={{ nginx_service }}
+    state=restarted

@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+PACKER_EXEC_PATH="/usr/local/bin/packer"
+
+###############################################################################
+
+NORMAL=0
+BOLD=1
+UNDERLINE=4
+RED=31
+GREEN=32
+BROWN=33
+BLUE=34
+MAGENTO=35
+CYAN=36
+GREY=37
+
+###############################################################################
+
+show() {
+  if [[ "$SHELL" == "/bin/bash" ]] ; then
+    if [[ -n "$2" && -z "$(no_colors)" ]] ; then
+        echo -e "\e[${2}m${1}\e[0m"
+    else
+        echo -e "$1"
+    fi
+  else
+    echo -e "$1"
+  fi
+}
+
+command_exists () {
+    type "$1" &> /dev/null ;
+}
+
+is_exist() {
+  if [[ $(command_exists $PACKER_EXEC_PATH) -eq 0 ]] ; then
+      version=`$PACKER_EXEC_PATH -v`
+      show "    Done: packer is here ($version)" $NORMAL
+  else
+      show "    Error: packer doesn't exist" $RED && exit 1
+  fi
+}
+
+validate() {
+  local config
+  config="`basename $1`"
+  $PACKER_EXEC_PATH validate "$config" >/dev/null
+  status=$?
+  if [[ $status -eq 0 ]] ; then
+    show "    Done: $config is well formated" $NORMAL
+  else
+    show "    Error: $config is corrupted" $RED && exit 1
+  fi
+}
+
+syntax_check() {
+  pushd "$packer_path" &>/dev/null
+    configs=`find . -maxdepth 1 -type f -name '*.json'`
+    if [[ $configs == "" ]] ; then
+      show "    Warning: nothing to check" $BROWN
+    else
+      for conf in $configs; do
+        validate "$conf"
+      done
+    fi
+  popd &>/dev/null
+}
+
+main() {
+  local packer_path="${1:-build}"
+
+  show "==> Running packer tests\n" $BOLD
+  show "    Checking installed packer" $BOLD
+  is_exist
+  echo
+
+  show "    Checking syntax" $BOLD
+  syntax_check "$packer_path"
+  echo
+
+  show "All tests have been passed." $GREEN
+}
+
+###############################################################################
+
+main "$@"

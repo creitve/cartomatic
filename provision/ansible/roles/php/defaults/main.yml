@@ -1,0 +1,14 @@
+php_version: "5.6"
+
+php_memory_limit: 256
+php_post_max_size: 64
+php_upload_max_filesize: 32
+php_max_execution_time: 30
+php_max_input_time: 60
+php_max_input_vars: 8192
+php_error_reporting: E_ALL
+php_display_errors: Off
+php_display_startup_errors: Off
+
+php_apc_shm_size: 128
+php_opcache_memory_consumption: 64

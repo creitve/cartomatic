@@ -1,0 +1,19 @@
+- name: installing packages
+  yum:
+    name={{ item }}
+    state=latest
+  with_items: php_packages
+  tags:
+    - php
+
+- name: copying configurations
+  template:
+    src=etc/{{ item }}.j2
+    dest=/etc/{{ item }}
+  notify:
+    - php-fpm-restarted
+  with_items:
+    - "php.ini"
+    - "php.d/opcache.ini"
+  tags:
+    - php

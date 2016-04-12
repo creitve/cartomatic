@@ -1,0 +1,9 @@
+---
+
+- name: installing repositories
+  yum:
+    name={{ item }}
+    state=installed
+  with_items: basic_packages
+  tags:
+    - basic

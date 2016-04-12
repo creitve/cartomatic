@@ -1,0 +1,7 @@
+- name: loading virtual hosts
+  template:
+    src=etc/nginx/vhost.d/default.conf.j2
+    dest=/etc/nginx/vhost.d/{{ item.key }}.conf
+  with_dict: projects
+  tags:
+    - nginx

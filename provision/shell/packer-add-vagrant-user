@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+################################################################################
+
+VAGRANT_USER="vagrant"
+VAGRANT_PASSWD="vagrant"
+VAGRANT_GROUP="$VAGRANT_USER"
+VAGRANT_INSECURE_PRIVATE_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key"
+
+################################################################################
+
+NORMAL=0
+BOLD=1
+UNDERLINE=4
+RED=31
+GREEN=32
+BROWN=33
+BLUE=34
+MAGENTO=35
+CYAN=36
+GREY=37
+
+################################################################################
+
+show() {
+    if [[ -n "$2" && -z "$(no_colors)" ]] ; then
+        echo -e "\e[${2}m${1}\e[0m"
+    else
+        echo -e "$1"
+    fi
+}
+
+is_root() {
+    if [ "$(id -u)" != "0" ]; then
+        show "Error: this script must be run as root" $RED
+        exit 1
+    fi
+}
+
+################################################################################
+
+add_sudoers() {
+    local user="$1"
+
+    echo "$user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+}
+
+add_admin() {
+    local user="$1"
+    local group="$2"
+    local passwd="$3"
+    local key="$4"
+    local home="/home/$1"
+
+    groupadd "$group"
+    useradd "$user" -g "$group" -G wheel -s /bin/bash
+    echo "$passwd" | passwd --stdin "$user"
+
+    mkdir -p "$home/.ssh"
+    echo "$key" >> "$home/.ssh/authorized_keys"
+
+    chown -R "$user" "$home/.ssh"
+    chmod -R go-rwsx "$home/.ssh"
+
+    add_sudoers "$user"
+}
+
+disable_sudoers_tty() {
+    sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
+}
+
+main() {
+    show "Checking permissions" $GREY
+    is_root
+
+    show "Removing 'requiretty' option from /etc/sudoers" $GREY
+    disable_sudoers_tty
+
+    show "Granting access for user $VAGRANT_USER" $GREY
+    add_admin "$VAGRANT_USER" \
+              "$VAGRANT_GROUP" \
+              "$VAGRANT_PASSWD" \
+              "$VAGRANT_INSECURE_PRIVATE_KEY"
+}
+
+################################################################################
+
+main "$@"

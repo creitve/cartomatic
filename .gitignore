@@ -1,3 +1,11 @@
-playbook.yml
-fetched
-credentials
+dev/.vagrant
+dev/config.yml
+dev/shared/*
+build/images
+build/packer_cache
+provision/ansible/credentials
+provision/ansible/fetched
+provision/ansible/playbook.yml
+*.pyc
+*.retry
+.DS_Store

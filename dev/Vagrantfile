@@ -1,0 +1,64 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+require 'yaml'
+
+################################################################################
+
+API_VERSION=2
+
+################################################################################
+
+yaml_config = YAML.load_file('config.yml')
+vms         = yaml_config["vms"]
+provision   = yaml_config["provision"]
+
+################################################################################
+
+Vagrant.configure(API_VERSION) do |config|
+  vms.each do |vm_host, vm_conf|
+
+    config.vm.define vm_host, autostart: true do |conf|
+      conf.ssh.forward_agent = true
+
+      conf.vm.box = vm_conf["box"]
+      conf.vm.box = vm_conf["box_url"]
+      if !(vm_conf["box_download_checksum"].nil?)
+        conf.vm.box_download_checksum = vm_conf["box_download_checksum"]
+        conf.vm.box_download_checksum_type = "sha1"
+      end
+      conf.vm.box_check_update = false
+      conf.vm.hostname = "#{vm_host}"
+      conf.vm.network "private_network", ip: vm_conf["ip"]
+      conf.vm.synced_folder "../provision", "/srv/provision"
+
+      conf.vm.provider "virtualbox" do |vbox|
+        vbox.memory = vm_conf["memory"] || 512
+        vbox.cpus   = vm_conf["cpus"] || 1
+      end
+
+      if !(provision["ansible"].nil?)
+        conf.vm.provision :ansible do |ansible|
+          ansible.limit = "#{vm_host}"
+          ansible.playbook = "#{provision['ansible']['playbook']}"
+          if !(provision['ansible']['tags'].nil?)
+            ansible.tags = provision['ansible']['tags']
+          end
+          ansible.extra_vars = "@#{provision['ansible']['extra_vars']}"
+          ansible.groups = {
+            "apache"       => "#{vm_host}",
+            "mysql"        => "#{vm_host}",
+            "nginx"        => "#{vm_host}",
+            "php"          => "#{vm_host}",
+            "redis"        => "#{vm_host}",
+            "apps:children" => ["apache", "php"],
+            "databases:children"  => ["mysql", "redis"],
+            "frontends:children"  => ["nginx"],
+          }
+        end
+      end
+    end
+  end
+end
+
+################################################################################

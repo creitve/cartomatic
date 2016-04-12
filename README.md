@@ -1,100 +1,118 @@
-# Сценарии
+About
+-----
 
-- *lamp.yml*
-nginx + apache + mysql + php5.6. 
+[![Build Status](https://jenkins.gongled.me/buildStatus/icon?job=cartomatic)](https://jenkins.gongled.me/job/cartomatic)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/cscart/server-ansible-playbooks/blob/master/COPYING)
 
-Пример установки:
+Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 2.0.
 
-```
-ansible-playbook -e @config/main.json -c local -i inventory lamp.yml
-```
+[![Cartomatic](https://raw.githubusercontent.com/cscart/server-ansible-playbooks/devel/cartomatic.png)](https://cs-cart.com)
 
-- *lemp.yml* 
-nginx + mysql + php5.6.
+Features
+--------
 
-Пример установки:
+- [x] HTTP/2 support
+- [x] Performance tuning for highload
+- [x] Deflate/GZIP compression
+- [x] Google Pagespeed filters support
+- [x] Well-looking error pages
+- [ ] Full-page Varnish cache
+- [x] SSL/TLS encryption via Let's Encrypt
+- [x] Strong SSL preferencies (A+ by default on SSL Labs)
+- [x] Development environment based on [Vagrant](https://vagrantup.com)
+- [x] Configurations for creating your own images based on [Packer](https://packer.io)
 
-```
-ansible-playbook -e @config/main.json -c local -i inventory lemp.yml
-```
+Quick install
+-------------
 
-- *lemp7.yml*
-nginx + mysql + php7.0.
-
-Пример установки: 
-
-```
-ansible-playbook -e @config/main.json -c local -i inventory_php7 lemp7.yml
-```
-
-- *lvemp7.yml*
-varnish + nginx + mysql + php7.0.
-
-Пример установки: 
+Log in to your server as superuser (root) via SSH and execute this command:
 
 ```
-ansible-playbook -e @config/main.json -c local -i inventory_varnish lvemp7.yml
+export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/cscart/server-ansible-playbooks/master/provision/shell/cartomatic-installer | bash -s -- yourdomain.tld
 ```
 
-Для php7, поддерживаемые ос:
+Done. It works.
 
-- Ubuntu 14.04 x86_64
-- Ubuntu 15.04 x86_64
-- CentOS 6 x86_64
-- CentOS 7 x86_64
+Manual install
+--------------
 
-*Стабильно работает только на чистых инсталляциях.*
+1. Log in to your server as superuser (root) via SSH and execute this command.
 
+    ```
+    curl -sL https://raw.githubusercontent.com/cscart/server-ansible-playbooks/master/provision/shell/cartomatic-installer | bash -s
+    ```
 
-# Установка
+2. Clone repository into the workspace.
 
-### Установка ansible (v. 1.9.x)
+   ```
+   git clone https://github.com/cscart/server-ansible-playbooks
+   ```
 
-*Ubuntu*
+3. Switch to the `provision/ansible` directory.
 
-```
-sudo apt-get -y update
-sudo apt-get -y install git python-pip python-dev
-sudo pip install ansible
-```
+    ```
+    cd cartomatic/provision/ansible/
+    ```
 
-*CentOS 6*
+4. Put custom settings into the JSON file:
 
-```
-sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
-sudo yum install -y gcc python-pip python-devel git
-sudo pip install ansible
-```
+    ```
+    vim config/manual.json
+    ```
 
-*CentOS 7*
+5. Run provisioning:
 
-```
-sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-sudo yum install -y gcc python-pip python-devel git
-sudo pip install ansible
-```
+    ```
+    ansible-playbook lamp.yml -c local -e @config/manual.json
+    ```
 
-### Запуск плейбука
+    Passwords will be saved in the `credentials` folder.
 
-1. Скачиваем репозиторий. 
-```
-mkdir ~/playbooks && git clone https://github.com/cscart/server-ansible-playbooks ~/playbooks
-```
+Components
+----------
 
-2. Настройка
-```
-cp ~/playbooks/config/advanced.json  ~/playbooks/config/main.json
-```
- Вносим правки в файл ~/playbooks/config/main.json.
- - stores_dir - директория проектов
- - stores - массив проектов
-    - «example.com» - доменное имя проекта
-    - storefronts - массив доменных имен витрин
-    - database - параметры подключения к БД
+Cartomatic will install for you the latest versions of following software:
 
-3. Запуск
-```
-cd ~/playbooks/ && ansible-playbook -e @config/main.json -c local -i inventory_varnish lvemp7.yml
-```
+- [x] [Apache](http://httpd.apache.org)
+  - [x] FastCGI + suExec
+  - [ ] mod_php
+- [x] [Nginx](http://nginx.org)
+  - [x] As a HTTP reverse proxy
+  - [ ] As a FastCGI proxy
+- [x] [PHP](https://secure.php.net)
+  - [x] 5.6.x
+  - [ ] 7.0.x
+- [x] [MariaDB](https://mariadb.com)
+- [x] [Redis](http://redis.io)
+- [x] [Postfix](http://www.postfix.org)
+- [x] [vsFTPd](https://security.appspot.com/vsftpd.html)
+- [ ] [Varnish](https://www.varnish-cache.org)
+- [x] [lego](https://github.com/xenolf/lego)
+- [ ] [phpMyAdmin](https://www.phpmyadmin.net)
+- [ ] [Fail2Ban](http://www.fail2ban.org/)
+- [ ] [OpenSSH](http://www.openssh.com)
 
-Если процесс прошел успешно, то можно устанавливать cscart.
+Please keep in mind that apps are still subject to change.
+
+Supported platforms
+-------------------
+
+* CentOS 6 x86_64
+* CentOS 7 x86_64
+
+Restrictions
+------------
+
+* Not compatible with ISPManager, cPanel, Plesk etc.
+* Works well only for clean installations.
+
+Credits
+-------
+
+* [@UlyanovskUI](https://twitter.com/UlyanovskUI) for logo design.
+* Tatiana Durnova for the help with translation.
+
+License
+-------
+
+[MIT](https://github.com/cscart/server-ansible-playbooks/blob/master/COPYING)

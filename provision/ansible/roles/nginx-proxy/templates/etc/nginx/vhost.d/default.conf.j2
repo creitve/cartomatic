@@ -1,0 +1,96 @@
+server {
+    listen  80;
+
+    server_name {{ item.key }};
+{% if item.key.find('www') == -1 %}
+    server_name www.{{ item.key }};
+{% endif %}
+{% for alias in item.value.aliases %}
+    server_name {{ alias }};
+{% if alias.find('www') == -1 %}
+    server_name www.{{ alias }};
+{% endif %}
+{% endfor %}
+
+    charset utf-8;
+
+    access_log  {{ nginx_logdir }}/{{ item.key }}/{{ item.key }}_access.log extended;
+    error_log   {{ nginx_logdir }}/{{ item.key }}/{{ item.key }}_error.log;
+
+    root {{ global.prefix }}/{{ item.key }}/public_html;
+
+    include xtra/error-40X.conf;
+    include xtra/error-50X.conf;
+
+    # ssl                         on;
+    # ssl_certificate             /etc/pki/tls/certs/{{ item.key }}.crt;
+    # ssl_certificate_key         /etc/pki/tls/private/{{ item.key }}.key;
+    # include                     xtra/ssl.conf;
+
+    location @backend {
+        proxy_pass http://backend;
+        include xtra/proxy_params.conf;
+        # include xtra/proxy_params_ssl.conf;
+    }
+
+    location / {
+        try_files /maintenance.html @backend;
+
+        location ~* \.(jpeg|ico|jpg|gif|png|svg|css|js|pdf|txt|tar|wof|csv|zip) {
+            access_log off;
+            try_files $uri @backend;
+            expires max;
+            add_header Access-Control-Allow-Origin *;
+            add_header Cache-Control public;
+        }
+    }
+}
+
+{% if lego_certpath is defined %}
+server {
+    listen  80;
+
+    server_name {{ item.key }};
+{% if item.key.find('www') == -1 %}
+    server_name www.{{ item.key }};
+{% endif %}
+{% for alias in item.value.aliases %}
+    server_name {{ alias }};
+{% if alias.find('www') == -1 %}
+    server_name www.{{ alias }};
+{% endif %}
+{% endfor %}
+
+    charset utf-8;
+
+    access_log  {{ nginx_logdir }}/{{ item.key }}/{{ item.key }}_access.log extended;
+    error_log   {{ nginx_logdir }}/{{ item.key }}/{{ item.key }}_error.log;
+
+    root {{ global.prefix }}/{{ item.key }}/public_html;
+
+    include xtra/error-40X.conf;
+    include xtra/error-50X.conf;
+
+    ssl                         on;
+    ssl_certificate             {{ lego_certpath }}/{{ item.key }}.crt;
+    ssl_certificate_key         {{ lego_certpath }}/{{ item.key }}.key;
+    include                     xtra/ssl.conf;
+
+    location @backend {
+        proxy_pass http://backend;
+        include xtra/proxy_params_ssl.conf;
+    }
+
+    location / {
+        try_files /maintenance.html @backend;
+
+        location ~* \.(jpeg|ico|jpg|gif|png|svg|css|js|pdf|txt|tar|wof|csv|zip) {
+            access_log off;
+            try_files $uri @backend;
+            expires max;
+            add_header Access-Control-Allow-Origin *;
+            add_header Cache-Control public;
+        }
+    }
+}
+{% endif %}

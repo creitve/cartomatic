@@ -1,0 +1,21 @@
+---
+
+- name: redis-enabled
+  service:
+    name={{ redis_service }}
+    state=started
+
+- name: redis-started
+  service:
+    name={{ redis_service }}
+    state=started
+
+- name: redis-stopped
+  service:
+    name={{ redis_service }}
+    state=stopped
+
+- name: redis-restarted
+  service:
+    name={{ redis_service }}
+    state=restarted

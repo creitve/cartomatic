@@ -1,0 +1,31 @@
+- name: installing packages
+  yum:
+    name={{ item }}
+    state=latest
+  notify:
+    - php-fpm-enabled
+  with_items: php_fpm_packages
+  tags:
+    - php
+
+- name: copying pool's configurations
+  template:
+    src=etc/php-fpm.d/pool.conf.j2
+    dest=/etc/php-fpm.d/{{ item.key }}.conf
+  notify:
+    - php-fpm-restarted
+  with_dict: projects
+  tags:
+    - php
+
+- name: creating directories for logging
+  file:
+    path={{ php_fpm_logdir }}/{{ item.key }}
+    state=directory
+    mode=0755
+    owner={{ item.value.owner|default(php_fpm_owner) }}
+    group={{ item.value.group|default(php_fpm_group) }}
+    recurse=yes
+  with_dict: projects
+  tags:
+    - php

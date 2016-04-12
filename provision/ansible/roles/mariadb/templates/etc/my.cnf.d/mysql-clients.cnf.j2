@@ -1,0 +1,8 @@
+[client]
+port            = {{ mariadb_port|default('3306') }}
+socket          = {{ mariadb_socket|default("/var/lib/mysql/mysql.sock") }}
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet    = {{ mariadb_max_allowed_packet|default("128") }}M

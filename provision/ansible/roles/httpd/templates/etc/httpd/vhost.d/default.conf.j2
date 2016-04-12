@@ -1,0 +1,76 @@
+<VirtualHost *:{{ httpd_port }}>
+    ServerAdmin root@localhost
+
+    ServerName {{ item.key }}
+{% if item.key.find('www') == -1 %}
+    ServerAlias www.{{ item.key }}
+{% endif %}
+{% for alias in item.value.aliases %}
+    ServerAlias {{ alias }}
+{% if alias.find('www') == -1 %}
+    ServerAlias www.{{ alias }}
+{% endif %}
+{% endfor %}
+
+    ServerSignature Off
+
+    {{ "CustomLog %s/%s/%s_access.log combined"|format(httpd_logdir, item.key, item.key) }}
+    {{ "ErrorLog %s/%s/%s_error.log"|format(httpd_logdir, item.key, item.key) }}
+
+    LogLevel warn
+
+    {{ "DocumentRoot %s/%s/public_html"|format(global.prefix, item.key) }}
+
+    <IfModule mod_proxy_fcgi.c>
+        {{ "ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://%s%s/%s/public_html/$1"|
+            format(php_fpm[item.key]['listen'], global.prefix, item.key) }}
+        SuexecUserGroup {{ item.value.owner|default(php_fpm_owner) }} {{ item.value.group|default(php_fpm_group) }}
+        DirectoryIndex /index.php index.php
+    </IfModule>
+
+    <Directory />
+        Options -Indexes +MultiViews +FollowSymlinks +SymLinksIfOwnerMatch +IncludesNoExec
+        AllowOverride All
+    </Directory>
+
+    <Directory {{ "%s/%s/public_html"|format(global.prefix, item.key) }}>
+        Options -Indexes +MultiViews +FollowSymlinks +SymLinksIfOwnerMatch +IncludesNoExec
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+
+    <Directory ~ ".*\.svn">
+        Order allow,deny
+        Deny from all
+        Satisfy All
+    </Directory>
+
+    <Directory ~ ".*\.git">
+        Order allow,deny
+        Deny from all
+        Satisfy All
+    </Directory>
+
+    <IfModule mod_expires.c>
+        ExpiresActive On
+        ExpiresDefault "access plus 1 month"
+    </IfModule>
+
+    <IfModule mod_headers.c>
+        <FilesMatch "\.(jpg|jpeg|gif|png|js|css)$">
+            Header set Cache-control "public, max-age=86400"
+        </FilesMatch>
+
+        <FilesMatch "\.(ttf|ttc|otf|eot|woff|css)$">
+            Header set Access-Control-Allow-Origin "*"
+        </FilesMatch>
+    </IfModule>
+
+    <IfModule mod_setenvif.c>
+        BrowserMatch ^Mozilla/4 gzip-only-text/html
+        BrowserMatch ^Mozilla/4\.0[678] no-gzip
+        BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    </IfModule>
+
+</VirtualHost>

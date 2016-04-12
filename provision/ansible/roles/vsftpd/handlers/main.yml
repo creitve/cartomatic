@@ -1,0 +1,21 @@
+---
+
+- name: vsftpd-enabled
+  service:
+    name={{ vsftpd_service }}
+    enabled=yes
+
+- name: vsftpd-started
+  service:
+    name={{ vsftpd_service }}
+    state=started
+
+- name: vsftpd-stopped
+  service:
+    name={{ vsftpd_service }}
+    state=stopped
+
+- name: vsftpd-restarted
+  service:
+    name={{ vsftpd_service }}
+    state=restarted

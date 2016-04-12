@@ -1,0 +1,129 @@
+- name: installing dependencies
+  yum:
+    name=MySQL-python
+    state=latest
+  tags:
+    - mariadb
+
+- name: installing the repository
+  template:
+    src=etc/yum.repos.d/MariaDB.repo.j2
+    dest=/etc/yum.repos.d/MariaDB.repo
+  tags:
+    - mariadb
+
+- name: checking system for previous installation
+  stat:
+    path=/usr/sbin/mysqld
+  register: mariadb_stat
+  tags:
+    - mariadb
+
+- name: installing packages
+  yum:
+    name={{ item }}
+    state=latest
+  with_items: mariadb_packages
+  notify:
+    - mariadb-enabled
+  tags:
+    - mariadb
+
+- name: installing databases
+  command: mysql_install_db --user=mysql
+  when: (mariadb_stat.stat.exists == False)
+  tags:
+    - mariadb
+
+- name: loading configs
+  template:
+    src=etc/my.cnf.d/{{ item }}.j2
+    dest=/etc/my.cnf.d/{{ item }}
+    owner=root
+    mode=0644
+    backup=yes
+  notify:
+    - maraidb-restarted
+  with_items:
+    - server.cnf
+    - mysql-clients.cnf
+  tags:
+    - mariadb
+
+- name: running service
+  service:
+    name={{ mariadb_service }}
+    state=started
+  tags:
+    - mariadb
+
+- name: applying root's password
+  command: /usr/bin/mysqladmin -u root password '{{ mariadb_password }}'
+  when: (mariadb_stat.stat.exists == False)
+  ignore_errors: true
+  tags:
+    - mariadb
+
+- name: loading .my.cnf into /root
+  template:
+    src=access.j2
+    dest=/root/.my.cnf
+  tags:
+    - mariadb
+
+- name: removing users with empty passwords for internet
+  mysql_user:
+    name=""
+    password=""
+    host={{ ansible_fqdn }}
+    priv=*.*:USAGE
+    state=absent
+    login_user=root
+  when: (mariadb_stat.stat.exists == False)
+  ignore_errors: True
+  tags:
+    - mariadb
+
+- name: removing users with empty passwords for localhost
+  mysql_user:
+    name=""
+    password=""
+    host=localhost
+    priv=*.*:USAGE
+    state=absent
+    login_user=root
+  when: (mariadb_stat.stat.exists == False)
+  ignore_errors: True
+  tags:
+    - mariadb
+
+- name: removing database for tests
+  mysql_db:
+    db=test
+    state=absent
+    login_user=root
+  when: (mariadb_stat.stat.exists == False)
+  ignore_errors: true
+  tags:
+    - mariadb
+
+- name: creating databases for projects
+  mysql_db:
+    db={{ item.value.database }}
+    state=present
+    login_user=root
+  with_dict: mariadb
+  when: (mariadb_stat.stat.exists == False)
+  tags:
+    - mariadb
+
+- name: granting privileges
+  mysql_user:
+    name={{ item.value.user }}
+    password={{ item.value.password }}
+    priv={{ item.value.database }}.*:ALL
+    login_user=root
+  with_dict: mariadb
+  when: (mariadb_stat.stat.exists == False)
+  tags:
+    - mariadb

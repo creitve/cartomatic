@@ -1,0 +1,30 @@
+---
+
+- name: copying sudo configs for VirtualBox
+  template:
+    src={{ item.tmpl }}.j2
+    dest=/{{ item.tmpl }}
+    mode=440
+    owner=root
+    group=root
+    validate='visudo -cf %s'
+  with_items:
+    - { 'tmpl': 'etc/sudoers.d/99-vagrant' }
+  when: ansible_bios_version == "VirtualBox"
+  tags:
+    - access
+
+- name: copying sudo configs
+  template:
+    src={{ item.tmpl }}.j2
+    dest=/{{ item.tmpl }}
+    mode=440
+    owner=root
+    group=root
+    validate='visudo -cf %s'
+  with_items:
+    - { 'tmpl': 'etc/sudoers.d/00-aliases' }
+    - { 'tmpl': 'etc/sudoers.d/10-access' }
+    - { 'tmpl': 'etc/sudoers' }
+  tags:
+    - access

@@ -1,0 +1,4 @@
+vsftpd_service: "vsftpd"
+
+vsftpd_packages:
+  - vsftpd

@@ -1,0 +1,7 @@
+php_fpm_logdir: "/var/log/php-fpm"
+php_fpm_service: "php-fpm"
+php_fpm_packages:
+  - "php{{ php_version_suffix }}-fpm"
+
+php_fpm_owner: "deploy"
+php_fpm_group: "service"

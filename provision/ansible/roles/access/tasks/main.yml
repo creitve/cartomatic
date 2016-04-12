@@ -1,0 +1,47 @@
+---
+
+- name: creating directories for projects
+  file:
+    path="{{ '%s/%s/public_html'|format(global.prefix, item.key) }}"
+    state=directory
+    mode=755
+    owner=root
+    group=root
+  ignore_errors: true
+  with_dict: access
+  tags:
+    - access
+
+- name: creating group
+  group:
+    name={{ item.value.group | default(item.value.owner) }}
+    state=present
+    system=yes
+  with_dict: access
+  tags:
+    - access
+
+- name: creating user
+  user:
+    name={{ item.value.owner }}
+    group={{ item.value.group | default(item.value.owner) }}
+    home="{{ global.prefix }}/{{ item.key }}"
+    shell=/bin/bash
+    state=present
+    createhome=no
+  with_dict: access
+  ignore_errors: true
+  tags:
+    - access
+
+- name: applying permissions
+  file:
+    path="{{ '%s/%s'|format(global.prefix, item.key) }}"
+    state=directory
+    mode=555
+    owner={{ item.value.owner }}
+    group={{ item.value.group | default(item.value.owner) }}
+  with_dict: access
+  ignore_errors: true
+  tags:
+    - access

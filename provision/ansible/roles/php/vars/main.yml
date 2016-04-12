@@ -1,0 +1,10 @@
+php_version_suffix: "{{ php_version|replace('.', '') }}"
+
+php_packages:
+  - "php{{ php_version_suffix }}-curl"
+  - "php{{ php_version_suffix }}-gd"
+  - "php{{ php_version_suffix }}-mysql"
+  - "php{{ php_version_suffix }}-opcache"
+  - "php{{ php_version_suffix }}-pecl-imagick"
+  - "php{{ php_version_suffix }}-pecl-redis"
+  - "php{{ php_version_suffix }}-pecl-apcu"

@@ -1,0 +1,23 @@
+---
+
+- name: installing packages
+  yum:
+    pkg={{ item }}
+    state=latest
+  notify:
+    - vsftpd-enabled
+  with_items: vsftpd_packages
+  tags:
+    - ftp
+
+- name: loading configurations
+  template:
+    src=etc/vsftpd/{{ item }}.j2
+    dest=/etc/vsftpd/{{ item }}
+  notify:
+    - vsftpd-restarted
+  with_items:
+    - "vsftpd.conf"
+    - "vsftpd.user_list"
+  tags:
+    - ftp

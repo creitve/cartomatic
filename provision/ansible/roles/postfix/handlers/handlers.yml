@@ -1,0 +1,19 @@
+- name: postfix-started
+  service:
+    name={{ postfix_service }}
+    state=started
+
+- name: postfix-restarted
+  service:
+    name={{ postfix_service }}
+    state=restarted
+
+- name: postfix-reloaded
+  service:
+    name={{ postfix_service }}
+    state=reloaded
+
+- name: postfix-enabled
+  service:
+    name={{ postfix_service }}
+    enabled=yes

@@ -1,0 +1,21 @@
+---
+
+- name: mariadb-enabled
+  service:
+    name={{ mariadb_service }}
+    enabled=yes
+
+- name: mariadb-started
+  service:
+    name={{ mariadb_service }}
+    state=started
+
+- name: mariadb-stopped
+  service:
+    name={{ mariadb_service }}
+    state=stopped
+
+- name: mariadb-restarted
+  service:
+    name={{ mariadb_service }}
+    state=restarted

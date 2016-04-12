@@ -1,0 +1,25 @@
+---
+
+- name: Everywhere
+  become: yes
+  hosts: all
+  roles:
+    - common
+    - sudoers
+
+- name: Application servers
+  become: yes
+  hosts: apps
+  roles:
+    - access
+    - nginx-proxy
+    - httpd
+    - vsftpd
+    - postfix
+
+- name: DB servers
+  become: yes
+  hosts: databases
+  roles:
+    - mariadb
+    - redis

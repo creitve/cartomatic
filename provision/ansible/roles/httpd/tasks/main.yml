@@ -1,0 +1,43 @@
+- name: installing packages
+  yum:
+    pkg={{ item }}
+    state=latest
+  notify:
+    - httpd-enabled
+  with_items: httpd_packages
+  tags:
+    - httpd
+
+- name: copying configs
+  template:
+    src=etc/httpd/{{ item }}.j2
+    dest=/etc/httpd/{{ item }}
+  with_items:
+    - conf/httpd.conf
+    - conf/extra/httpd-mpm.conf
+  notify:
+    - httpd-restarted
+  tags:
+    - httpd
+
+- name: copying virtual hosts
+  template:
+    src=etc/httpd/vhost.d/default.conf.j2
+    dest=/etc/httpd/vhost.d/{{ item.key }}.conf
+  notify:
+    - httpd-restarted
+  with_dict: projects
+  tags:
+    - httpd
+
+- name: creating directories for logging
+  file:
+    path={{ "%s/%s"|format(httpd_logdir, item.key) }}
+    mode=0755
+    owner=apache
+    group=root
+    state=directory
+    recurse=yes
+  with_dict: projects
+  tags:
+    - httpd

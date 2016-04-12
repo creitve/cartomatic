@@ -1,0 +1,7 @@
+- name: installing common packages
+  yum:
+    name={{ item }}
+    state=latest
+  with_items: common_packages
+  tags:
+    - common

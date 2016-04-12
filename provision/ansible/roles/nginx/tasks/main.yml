@@ -1,0 +1,21 @@
+- name: installing packages
+  yum:
+    name={{ item }}
+    state=latest
+  notify:
+    - nginx-enabled
+  with_items: nginx_packages
+  tags:
+    - nginx
+
+- name: creating directories for logging
+  file:
+    path={{ nginx_logdir }}/{{ item.key }}
+    mode=0755
+    owner=nginx
+    group=root
+    state=directory
+    recurse=yes
+  with_dict: projects
+  tags:
+    - nginx

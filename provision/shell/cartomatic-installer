@@ -1,0 +1,242 @@
+#!/usr/bin/env bash
+
+###############################################################################
+
+CARTOMATIC_REPO="https://github.com/gongled/cartomatic"
+CARTOMATIC_PLAYBOOK="lamp.yml"
+CARTOMATIC_EXTRA_VARS="config/auto.json"
+
+OS_DISTRIBUTION=`python -c \
+  "import platform; print(platform.linux_distribution()[0].lower())"`
+OS_MAJOR_RELEASE=`python -c \
+  "import platform; print(platform.linux_distribution()[1].split('.')[0])"`
+
+###############################################################################
+
+NORMAL=0
+BOLD=1
+UNDERLINE=4
+RED=31
+GREEN=32
+BROWN=33
+BLUE=34
+MAGENTO=35
+CYAN=36
+GREY=37
+
+###############################################################################
+
+show() {
+    if [[ -n "$2" && -z "$(no_colors)" ]] ; then
+        echo -e "\e[${2}m${1}\e[0m"
+    else
+        echo -e "$1"
+    fi
+}
+
+print_info_message () {
+    local line='........................................'
+    local title=$1
+    local message=$2
+
+    printf "%s %s %s\n" "$title" "${line:${#title}}" "$message"
+}
+
+is_ok() {
+    [[ "$1" -eq 0 ]]
+}
+
+is_executable() {
+    type "$1" >/dev/null 2>&1
+}
+
+is_root() {
+    if [ "$(id -u)" != "0" ]; then
+        show "Error: this script must be run as root" $RED
+        exit 1
+    fi
+}
+
+is_supported_os() {
+    local distro="$1"
+
+    if [[ "$distro" == "centos" ]] ; then
+        :
+    elif [[ "$distro" == "centos linux" ]] ; then
+        :
+    else
+        show "\nError: your OS is not supported yet." $RED
+        exit 1
+    fi
+}
+
+is_supported_major_release() {
+    local release="$1"
+
+    if [[ "$release" == "6" ]] ; then
+        :
+    elif [[ "$release" == "7" ]] ; then
+        :
+    else
+        show "\nError: your OS major release is not supported yet." $RED
+        exit 1
+    fi
+}
+
+###############################################################################
+
+install_gongled_repo() {
+    if is_executable yum ; then
+        yum install -y "https://release.yum.gongled.me/gongled-release-$OS_MAJOR_RELEASE.noarch.rpm"
+    fi
+}
+
+install_dependencies() {
+    if is_executable yum ; then
+        install_gongled_repo
+        yum install -y git ansible ansible-lint vim tmux
+    fi
+}
+
+clone_repository() {
+    local repo="$1"
+    local dest="$2"
+
+    if is_executable mkdir ; then
+        mkdir -p "$dest"
+        if is_executable git ; then
+            pushd "$dest"
+                git clone "$repo" "$dest"
+            popd
+        fi
+    fi
+}
+
+checkout_branch() {
+    local dest="$1"
+    local branch=${2:-master}
+
+    if is_executable git ; then
+        pushd "$dest"
+            git checkout "$branch"
+        popd
+    fi
+}
+
+patch_config() {
+    local config="$1"
+    local domain="$2"
+    local mariadb_db="$3"
+    local mariadb_user="$4"
+    local mariadb_passwd="$5"
+
+    sed -e 's:%HOSTNAME%:'$domain':g' \
+        -e 's:%MARIADB_DATABASE%:'$mariadb_db':g' \
+        -e 's:%MARIADB_USER%:'$mariadb_user':g' \
+        -e 's:%MARIADB_PASSWORD%:'$mariadb_passwd':g' \
+        -i "$config"
+}
+
+run_provision() {
+    local playbook="$1"
+    local extra_vars="$2"
+
+    ansible-playbook -c local "$playbook" -e "@$extra_vars"
+    if ! is_ok $?; then
+        show "\nError: can't provision machine using ansible" $RED
+        exit 1
+    fi
+}
+
+show_information() {
+    local domain="$1"
+    local mariadb_db="$2"
+    local mariadb_user="$3"
+    local mariadb_passwd="$4"
+    local dest="/srv/projects"
+
+    show "\nBasic" $BOLD
+    print_info_message "Website link" "http://$domain/"
+    print_info_message "Document root" "$dest"
+
+    show "\nDatabase" $BOLD
+    print_info_message "Hostname" "127.0.0.1"
+    print_info_message "Database" "$mariadb_db"
+    print_info_message "User" "$mariadb_user"
+    print_info_message "Password" "$mariadb_passwd"
+}
+
+###############################################################################
+
+main() {
+    local domain=$1
+    local project=`basename "$CARTOMATIC_REPO"`
+    local path=${CARTOMATIC_PATH:-"`pwd`/$project"}
+    local branch=${CARTOMATIC_BRANCH:-master}
+
+    if is_root ; then
+
+        if [[ "$CARTOMATIC_AUTO" ]] ; then
+            if [[ ! -n "$domain" ]] ; then
+                read -p "Enter domain name for your website (without www): " domain
+            fi
+        fi
+
+        show "==> Installing dependencies..." $GREY
+        if is_supported_os "$OS_DISTRIBUTION" ; then
+            if is_supported_major_release "$OS_MAJOR_RELEASE" ; then
+                install_dependencies &> /dev/null
+            fi
+        fi
+
+        if [[ "$CARTOMATIC_AUTO" ]] ; then
+            show "==> Cloning the repository..." $GREY
+            clone_repository "$CARTOMATIC_REPO" \
+                             "$path" &> /dev/null
+
+            show "==> Switching branch into '$branch'..." $GREY
+            checkout_branch "$path" \
+                            "$branch" &> /dev/null
+        fi
+
+        if [[ "$CARTOMATIC_AUTO" ]] ; then
+            pushd "$path/provision/ansible" > /dev/null
+
+            show "==> Patching config..." $GREY
+
+            mariadb_db=`echo $domain | sed 's/\./_/g'`
+            mariadb_user="$mariadb_db"
+            mariadb_passwd=`mktemp -u XXXXXXXXXXXXXXXX`
+
+            patch_config "$CARTOMATIC_EXTRA_VARS" \
+                "$domain" \
+                "$mariadb_db" \
+                "$mariadb_user" \
+                "$mariadb_passwd" &> /dev/null
+
+            show "==> Start provisioning via ansible..." $GREY
+            run_provision "$CARTOMATIC_PLAYBOOK" "$CARTOMATIC_EXTRA_VARS"
+
+            if is_ok $? ; then
+                show "\nInstallation has been successfully completed\n" $GREEN
+                show_information "$domain" \
+                    "$mariadb_db" \
+                    "$mariadb_user" \
+                    "$mariadb_passwd"
+                exit 0
+            else
+                show "\nError: installation has been canceled." $RED
+                exit 1
+            fi
+
+            popd > /dev/null
+        else
+            show "Cartomatic is ready to start" $GREEN
+            exit 0
+        fi
+    fi
+}
+
+###############################################################################
+
+main "$@"

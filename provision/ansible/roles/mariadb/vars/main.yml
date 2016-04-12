@@ -1,0 +1,4 @@
+mariadb_packages:
+  - MariaDB-server
+
+mariadb_service: mysql

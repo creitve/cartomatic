@@ -1,0 +1,30 @@
+{
+    "projects":
+    {
+        "%HOSTNAME%":
+        {
+            "aliases": [],
+        }
+    },
+
+    "access": {
+        "%HOSTNAME%": {
+            "owner": "deploy",
+            "group": "service"
+        }
+    },
+
+    "php_fpm": {
+        "%HOSTNAME%": {
+            "listen": "127.0.0.1:9000"
+        }
+    },
+
+    "mariadb": {
+        "%HOSTNAME%": {
+            "database": "%MARIADB_DATABASE%",
+            "user": "%MARIADB_USER%",
+            "password": "%MARIADB_PASSWORD%"
+        }
+    }
+}

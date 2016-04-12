@@ -1,0 +1,30 @@
+{
+    "projects":
+    {
+        "example.com":
+        {
+            "aliases": [],
+        }
+    },
+
+    "access": {
+        "example.com": {
+            "owner": "deploy",
+            "group": "service"
+        }
+    },
+
+    "php_fpm": {
+        "example.com": {
+            "listen": "127.0.0.1:9000"
+        }
+    },
+
+    "mariadb": {
+        "example.com": {
+            "database": "example",
+            "user": "example",
+            "password": "example"
+        }
+    }
+}

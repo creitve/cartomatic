@@ -1,0 +1,76 @@
+{
+  "variables": {
+    "build_name":             "centos7",
+
+    "vagrant_iso_url":        "http://mirror.yandex.ru/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
+    "vagrant_iso_checksum":   "88c0437f0a14c6e2c94426df9d43cd67",
+    "vagrant_checksum_type":  "md5"
+  },
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "/usr/bin/env bash '{{.Path}}'",
+      "scripts": [
+        "../provision/shell/packer-add-vagrant-user",
+        "../provision/shell/packer-rpms-clean",
+        "../provision/shell/packer-shrink-image"
+      ],
+      "only": [
+        "virtualbox-iso"
+      ]
+    }
+  ],
+
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos7.cfg<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 20480,
+      "guest_os_type": "RedHat_64",
+      "headless": true,
+      "http_directory": "http",
+      "iso_urls": [
+        "{{user `vagrant_iso_url`}}"
+      ],
+      "iso_checksum_type": "{{user `vagrant_checksum_type`}}",
+      "iso_checksum": "{{user `vagrant_iso_checksum`}}",
+      "ssh_username": "root",
+      "ssh_password": "test123!",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "ssh_pty": "true",
+      "shutdown_command": "/sbin/halt -h -p",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "{{user `build_name`}}",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "512"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ]
+    }
+  ],
+
+  "post-processors": [
+    {
+      "output": "images/{{user `build_name`}}.box",
+      "type": "vagrant",
+      "only": [
+        "virtualbox-iso"
+      ]
+    }
+  ]
+}

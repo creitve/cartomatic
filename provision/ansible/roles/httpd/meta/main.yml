@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: basic }
+  - { role: php-fpm }
