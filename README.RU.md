@@ -32,8 +32,8 @@ export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/cscart/s
 
 Готово.
 
-Обычная установка
------------------
+Ручная установка
+----------------
 
 1. Подключитесь к серверу по SSH под суперпользователем (root) и выполните команду:
 
