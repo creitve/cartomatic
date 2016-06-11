@@ -2,8 +2,8 @@
   "variables": {
     "build_name":             "centos6",
 
-    "vagrant_iso_url":        "http://mirror.yandex.ru/centos/6/isos/x86_64/CentOS-6.7-x86_64-minimal.iso",
-    "vagrant_iso_checksum":   "9381a24b8bee2fed0c26896141a64b69",
+    "vagrant_iso_url":        "http://mirror.yandex.ru/centos/6/isos/x86_64/CentOS-6.8-x86_64-minimal.iso",
+    "vagrant_iso_checksum":   "0ca12fe5f28c2ceed4f4084b41ff8a0b",
     "vagrant_checksum_type":  "md5"
   },
 
@@ -14,6 +14,7 @@
       "scripts": [
         "../provision/shell/packer-add-vagrant-user",
         "../provision/shell/packer-rpms-clean",
+        "../provision/shell/packer-deps",
         "../provision/shell/packer-shrink-image"
       ],
       "only": [

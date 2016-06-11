@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+yum -y -q update
+
+yum -y -q install kernel-devel gcc make perl bzip2
