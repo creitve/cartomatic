@@ -1,11 +1,11 @@
 About
 -----
 
+Work in progress. Please **DO NOT** use this software for settings up production servers.
+
 Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 2.0.
 
 [![Cartomatic](https://raw.githubusercontent.com/cscart/server-ansible-playbooks/develop/cartomatic.png)](https://cs-cart.com)
-
-*Caution*: Work in progress. Please *DO NOT* use this software for settings up production servers.
 
 Features
 --------
