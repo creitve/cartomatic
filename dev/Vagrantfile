@@ -22,7 +22,9 @@ Vagrant.configure(API_VERSION) do |config|
       conf.ssh.forward_agent = true
 
       conf.vm.box = vm_conf["box"]
-      conf.vm.box = vm_conf["box_url"]
+      if !(vm_conf["box_url"].nil?)
+        conf.vm.box_url = vm_conf["box_url"]
+      end
       if !(vm_conf["box_download_checksum"].nil?)
         conf.vm.box_download_checksum = vm_conf["box_download_checksum"]
         conf.vm.box_download_checksum_type = "sha1"
