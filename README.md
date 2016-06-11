@@ -3,9 +3,9 @@ About
 
 Work in progress. Please **DO NOT** use this software for settings up production servers.
 
-Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 2.0.
+Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0 alpha.
 
-[![Cartomatic](https://raw.githubusercontent.com/cscart/server-ansible-playbooks/develop/cartomatic.png)](https://cs-cart.com)
+[![Cartomatic](https://raw.githubusercontent.com/simtechdev/cartomatic/master/cartomatic.png)](https://cs-cart.com)
 
 Features
 --------
@@ -108,4 +108,4 @@ Restrictions
 License
 -------
 
-[MIT](https://github.com/cscart/server-ansible-playbooks/blob/master/COPYING)
+MIT
