@@ -9,3 +9,4 @@ provision/ansible/playbook.yml
 *.pyc
 *.retry
 .DS_Store
+output-virtualbox-iso
