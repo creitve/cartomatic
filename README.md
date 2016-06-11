@@ -5,6 +5,8 @@ Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://c
 
 [![Cartomatic](https://raw.githubusercontent.com/cscart/server-ansible-playbooks/develop/cartomatic.png)](https://cs-cart.com)
 
+*Caution*: Work in progress. Please *DO NOT* use this software for settings up production servers.
+
 Features
 --------
 
@@ -102,12 +104,6 @@ Restrictions
 
 * Not compatible with ISPManager, cPanel, Plesk etc.
 * Works well only for clean installations.
-
-Credits
--------
-
-* [@UlyanovskUI](https://twitter.com/UlyanovskUI) for logo design.
-* Tatiana Durnova for the help with translation.
 
 License
 -------
