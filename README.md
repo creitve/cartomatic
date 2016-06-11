@@ -1,9 +1,6 @@
 About
 -----
 
-[![Build Status](https://jenkins.gongled.me/buildStatus/icon?job=cartomatic)](https://jenkins.gongled.me/job/cartomatic)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/cscart/server-ansible-playbooks/blob/master/COPYING)
-
 Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 2.0.
 
 [![Cartomatic](https://raw.githubusercontent.com/cscart/server-ansible-playbooks/develop/cartomatic.png)](https://cs-cart.com)
