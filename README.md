@@ -27,7 +27,7 @@ Quick install
 Log in to your server as superuser (root) via SSH and execute this command:
 
 ```
-export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/cscart/server-ansible-playbooks/master/provision/shell/cartomatic-installer | bash -s -- yourdomain.tld
+export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/simtechdev/cartomatic/master/provision/shell/cartomatic-installer | bash -s -- yourdomain.tld
 ```
 
 Done. It works.
@@ -38,13 +38,13 @@ Manual install
 1. Log in to your server as superuser (root) via SSH and execute this command.
 
     ```
-    curl -sL https://raw.githubusercontent.com/cscart/server-ansible-playbooks/master/provision/shell/cartomatic-installer | bash -s
+    curl -sL https://raw.githubusercontent.com/simtechdev/cartomatic/master/provision/shell/cartomatic-installer | bash -s
     ```
 
 2. Clone repository into the workspace.
 
    ```
-   git clone https://github.com/cscart/server-ansible-playbooks
+   git clone https://github.com/simtechdev/cartomatic
    ```
 
 3. Switch to the `provision/ansible` directory.
@@ -85,9 +85,9 @@ Cartomatic will install for you the latest versions of following software:
 - [x] [Redis](http://redis.io)
 - [x] [Postfix](http://www.postfix.org)
 - [x] [vsFTPd](https://security.appspot.com/vsftpd.html)
-- [ ] [Varnish](https://www.varnish-cache.org)
+- [x] [Varnish](https://www.varnish-cache.org)
 - [x] [lego](https://github.com/xenolf/lego)
-- [ ] [phpMyAdmin](https://www.phpmyadmin.net)
+- [x] [phpMyAdmin](https://www.phpmyadmin.net)
 - [ ] [Fail2Ban](http://www.fail2ban.org/)
 - [ ] [OpenSSH](http://www.openssh.com)
 
