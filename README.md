@@ -1,11 +1,5 @@
 ## About
 
-Work in progress. Please **DO NOT** use this software for settings up production servers.
-
-Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0 alpha.
-
-[![Cartomatic](https://raw.githubusercontent.com/simtechdev/cartomatic/master/cartomatic.png)](https://cs-cart.com)
-
 * [Features](#features)
 * [Quick install](#quick-install)
 * [Manual install](#manual-install)
@@ -13,6 +7,12 @@ Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://c
 * [Supported platforms](#supported-platforms)
 * [Restrictions](#restrictions)
 * [License](#license)
+
+Work in progress. Please **DO NOT** use this software for settings up production servers.
+
+Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0 alpha.
+
+[![Cartomatic](https://raw.githubusercontent.com/simtechdev/cartomatic/master/cartomatic.png)](https://cs-cart.com)
 
 #### Features
 
