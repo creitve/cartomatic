@@ -15,7 +15,7 @@ Features
 - [x] Deflate/GZIP compression
 - [x] Google Pagespeed filters support
 - [x] Well-looking error pages
-- [ ] Full-page Varnish cache
+- [x] Full-page Varnish cache
 - [x] SSL/TLS encryption via Let's Encrypt
 - [x] Strong SSL preferencies (A+ by default on SSL Labs)
 - [x] Development environment based on [Vagrant](https://vagrantup.com)
