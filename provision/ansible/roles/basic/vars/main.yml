@@ -1,2 +1,4 @@
 basic_packages:
-  - https://release.yum.gongled.me/gongled-release-{{ ansible_distribution_major_version }}.noarch.rpm
+  - http://release.yum.kaos.io/x86_64/kaos-repo-7.0-0.el6.noarch.rpm
+  - https://release.yum.smtk.us/smtk-release-{{ ansible_distribution_major_version }}.noarch.rpm
+  - http://rpms.famillecollet.com/enterprise/remi-release-{{ ansible_distribution_major_version }}.rpm

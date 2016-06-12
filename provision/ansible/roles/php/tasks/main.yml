@@ -1,8 +1,9 @@
 - name: installing packages
   yum:
     name={{ item }}
+    enablerepo="{{ php_enablerepo }}"
     state=latest
-  with_items: php_packages
+  with_items: "{{ php_packages }}"
   tags:
     - php
 

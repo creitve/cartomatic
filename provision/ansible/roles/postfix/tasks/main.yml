@@ -9,15 +9,17 @@
   yum:
     pkg={{ item }}
     state=installed
-  with_items: postfix_packages
-  notify: postfix-enabled
+  with_items: "{{ postfix_packages }}"
+  notify:
+    - postfix-enabled
   tags:
-   - mail
+     - mail
 
 - name: loading main configuration
   template:
     src=main.cf.j2
     dest=/etc/postfix/main.cf
-  notify: postfix-restarted
+  notify: 
+    - postfix-restarted
   tags:
     - mail

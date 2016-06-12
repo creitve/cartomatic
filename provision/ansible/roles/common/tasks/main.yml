@@ -2,6 +2,6 @@
   yum:
     name={{ item }}
     state=latest
-  with_items: common_packages
+  with_items: "{{ common_packages }}"
   tags:
     - common

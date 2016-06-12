@@ -6,7 +6,7 @@
     state=latest
   notify:
     - redis-enabled
-  with_items: redis_packages
+  with_items: "{{ redis_packages }}"
   tags:
     - redis
 

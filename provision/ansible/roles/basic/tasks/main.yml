@@ -1,9 +1,29 @@
 ---
 
+- name: installing EPEL
+  yum:
+    name=epel-release
+    state=latest
+  tags:
+    - basic
+
+- name: installing needed packages
+  yum: 
+    name={{ item }}
+    state=installed
+  with_items:
+    - python-urllib3
+    - pyOpenSSL
+    - python2-ndg_httpsclient
+    - python-pyasn1
+  tags:
+    - basic
+
 - name: installing repositories
   yum:
     name={{ item }}
     state=installed
-  with_items: basic_packages
+  with_items: "{{ basic_packages }}"
   tags:
     - basic
+

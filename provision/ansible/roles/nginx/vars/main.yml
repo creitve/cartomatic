@@ -1,6 +1,9 @@
 nginx_packages:
-  - nginx
+  - webkaos
+  - webkaos-nginx
 
 nginx_service: nginx
+nginx_service_user: webkaos
+nginx_service_group: webkaos
 
-nginx_logdir: "/var/log/nginx"
+nginx_logdir: "/var/log/webkaos"

@@ -2,6 +2,6 @@
   yum:
     pkg={{ item }}
     state=latest
-  with_items: phpmyadmin_packages
+  with_items: "{{ phpmyadmin_packages }}"
   tags:
     - phpmyadmin

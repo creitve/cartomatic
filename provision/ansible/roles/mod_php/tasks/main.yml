@@ -1,0 +1,11 @@
+- name: installing packages
+  yum:
+    name={{ item }}
+    enablerepo="{{ php_enablerepo }}"
+    state=latest
+  notify:
+    - httpd-restarted
+  with_items: "{{ mod_php_packages }}"
+  tags:
+    - php
+

@@ -6,7 +6,7 @@
     state=latest
   notify:
     - vsftpd-enabled
-  with_items: vsftpd_packages
+  with_items: "{{ vsftpd_packages }}"
   tags:
     - ftp
 

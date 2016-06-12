@@ -4,7 +4,7 @@
     state=latest
   notify:
     - nginx-enabled
-  with_items: nginx_packages
+  with_items: "{{ nginx_packages }}"
   tags:
     - nginx
 
@@ -12,10 +12,10 @@
   file:
     path={{ nginx_logdir }}/{{ item.key }}
     mode=0755
-    owner=nginx
-    group=root
+    owner={{ nginx_service_user }}
+    group={{ nginx_service_group }}
     state=directory
     recurse=yes
-  with_dict: projects
+  with_dict: "{{ projects }}"
   tags:
     - nginx

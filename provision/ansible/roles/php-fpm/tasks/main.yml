@@ -1,20 +1,21 @@
 - name: installing packages
   yum:
     name={{ item }}
+    enablerepo="{{ php_enablerepo }}"
     state=latest
   notify:
     - php-fpm-enabled
-  with_items: php_fpm_packages
+  with_items: "{{ php_fpm_packages }}"
   tags:
     - php
 
-- name: copying pool's configurations
+- name: copying pool configurations
   template:
     src=etc/php-fpm.d/pool.conf.j2
     dest=/etc/php-fpm.d/{{ item.key }}.conf
   notify:
     - php-fpm-restarted
-  with_dict: projects
+  with_dict: "{{ projects }}"
   tags:
     - php
 
@@ -26,6 +27,6 @@
     owner={{ item.value.owner|default(php_fpm_owner) }}
     group={{ item.value.group|default(php_fpm_group) }}
     recurse=yes
-  with_dict: projects
+  with_dict: "{{ projects }}"
   tags:
     - php
