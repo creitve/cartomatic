@@ -1,5 +1,9 @@
 ## About
 
+Work in progress. Please **DO NOT** use this software for settings up production servers.
+
+Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0 alpha.
+
 * [Features](#features)
 * [Quick install](#quick-install)
 * [Manual install](#manual-install)
@@ -7,12 +11,6 @@
 * [Supported platforms](#supported-platforms)
 * [Restrictions](#restrictions)
 * [License](#license)
-
-Work in progress. Please **DO NOT** use this software for settings up production servers.
-
-Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0 alpha.
-
-[![Cartomatic](https://raw.githubusercontent.com/simtechdev/cartomatic/master/cartomatic.png)](https://cs-cart.com)
 
 #### Features
 
@@ -78,18 +76,19 @@ Cartomatic will install for you the latest versions of following software:
 - [x] [Apache](http://httpd.apache.org)
   - [x] FastCGI + suExec
   - [ ] mod_php
-- [x] [Nginx](http://nginx.org)
+- [x] [WEBKAOS](http://github.com/essentialkaos/webkaos)
   - [x] As a HTTP reverse proxy
   - [ ] As a FastCGI proxy
 - [x] [PHP](https://secure.php.net)
+  - [x] 5.4.x
+  - [x] 5.5.x
   - [x] 5.6.x
-  - [ ] 7.0.x
+  - [x] 7.0.x
 - [x] [MariaDB](https://mariadb.com)
 - [x] [Redis](http://redis.io)
 - [x] [Postfix](http://www.postfix.org)
 - [x] [vsFTPd](https://security.appspot.com/vsftpd.html)
 - [x] [Varnish](https://www.varnish-cache.org)
-- [x] [lego](https://github.com/xenolf/lego)
 - [x] [phpMyAdmin](https://www.phpmyadmin.net)
 - [ ] [Fail2Ban](http://www.fail2ban.org/)
 - [ ] [OpenSSH](http://www.openssh.com)
