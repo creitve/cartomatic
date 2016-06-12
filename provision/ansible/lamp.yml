@@ -6,6 +6,7 @@
   roles:
     - common
     - sudoers
+    - iptables
 
 - name: Application servers
   become: yes

@@ -1,0 +1,56 @@
+NameVirtualHost {{ httpd_bind }}:{{ httpd_port }}
+
+ServerAdmin root@localhost
+ServerName localhost
+
+DocumentRoot "/var/www/html"
+
+UseCanonicalName Off
+HostnameLookups Off
+
+AccessFileName .htaccess
+DirectoryIndex index.html index.htm
+
+LogLevel warn
+
+CustomLog logs/access_log combined
+ErrorLog logs/error_log
+
+ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"
+
+<Directory "/var/www/cgi-bin">
+    AllowOverride None
+    Options None
+    Order allow,deny
+    Allow from all
+</Directory>
+
+<Directory />
+    Options FollowSymLinks
+    AllowOverride None
+</Directory>
+
+<Directory "/var/www/html">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+</Directory>
+
+<Files ~ "^\.ht">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</Files>
+
+<IfModule mod_mime_magic.c>
+    MIMEMagicFile conf/magic
+</IfModule>
+
+<IfModule mod_dav_fs.c>
+    DAVLockDB /var/lib/dav/lockdb
+</IfModule>
+
+<IfModule mod_userdir.c>
+    UserDir disabled
+</IfModule>

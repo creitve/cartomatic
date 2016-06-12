@@ -8,16 +8,31 @@
   tags:
     - httpd
 
-#- name: copying configs
-#  template:
-#    src=etc/httpd/{{ item }}.j2
-#    dest=/etc/httpd/{{ item }}
-#  with_items:
-#    - conf/httpd.conf
-#  notify:
-#    - httpd-restarted
-#  tags:
-#    - httpd
+- name: creating extra folder
+  file:
+    path=/etc/httpd/conf/extra
+    state=directory
+  tags:
+    - httpd
+
+- name: copying configs
+  template:
+    src=etc/httpd/{{ item }}.j2
+    dest=/etc/httpd/{{ item }}
+  with_items:
+    - conf/httpd.conf
+    - conf/extra/icons.conf
+    - conf/extra/language.conf
+    - conf/extra/logging.conf
+    - conf/extra/modules.conf
+    - conf/extra/mpm.conf
+    - conf/extra/random.conf
+    - conf/extra/vhosts.conf
+  notify:
+    - httpd-restarted
+  when: ansible_distribution_major_version == "6"
+  tags:
+    - httpd
 
 - name: copying virtual hosts
   template:
