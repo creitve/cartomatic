@@ -1,5 +1,4 @@
-About
------
+## About
 
 Work in progress. Please **DO NOT** use this software for settings up production servers.
 
@@ -7,8 +6,15 @@ Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://c
 
 [![Cartomatic](https://raw.githubusercontent.com/simtechdev/cartomatic/master/cartomatic.png)](https://cs-cart.com)
 
-Features
---------
+* [Features](#features)
+* [Quick install](#quick-install)
+* [Manual install](#manual-install)
+* [Components](#components)
+* [Supported platforms](#supported-platforms)
+* [Restrictions](#restrictions)
+* [License](#license)
+
+#### Features
 
 - [x] HTTP/2 support
 - [x] Performance tuning for highload
@@ -21,8 +27,7 @@ Features
 - [x] Development environment based on [Vagrant](https://vagrantup.com)
 - [x] Configurations for creating your own images based on [Packer](https://packer.io)
 
-Quick install
--------------
+#### Quick install
 
 Log in to your server as superuser (root) via SSH and execute this command:
 
@@ -32,8 +37,7 @@ export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/simtechd
 
 Done. It works.
 
-Manual install
---------------
+#### Manual install
 
 1. Log in to your server as superuser (root) via SSH and execute this command.
 
@@ -67,8 +71,7 @@ Manual install
 
     Passwords will be saved in the `credentials` folder.
 
-Components
-----------
+#### Components
 
 Cartomatic will install for you the latest versions of following software:
 
@@ -93,19 +96,16 @@ Cartomatic will install for you the latest versions of following software:
 
 Please keep in mind that apps are still subject to change.
 
-Supported platforms
--------------------
+#### Supported platforms
 
 * CentOS/RedHat/Scientific Linux 6 x86_64
 * CentOS/RedHat/Scientific Linux 7 x86_64
 
-Restrictions
-------------
+#### Restrictions
 
 * Not compatible with ISPManager, cPanel, Plesk etc.
 * Works well only for clean installations.
 
-License
--------
+#### License
 
 MIT
