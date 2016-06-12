@@ -8,6 +8,21 @@
   tags:
     - nginx
 
+- name: loading configs
+  template:
+    src=etc/nginx/{{ item }}.j2
+    dest=/etc/nginx/{{ item }}
+  with_items:
+    - "xtra/error-40X.conf"
+    - "xtra/error-50X.conf"
+    - "xtra/proxy_params.conf"
+    - "xtra/proxy_params_ssl.conf"
+    - "xtra/ssl.conf"
+  notify:
+    - nginx-restarted
+  tags:
+    - nginx
+
 - name: creating directories for logging
   file:
     path={{ nginx_logdir }}/{{ item.key }}
