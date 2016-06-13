@@ -1,8 +1,6 @@
 ## About
 
-Work in progress. Please **DO NOT** use this software for settings up production servers.
-
-Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0 alpha.
+Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0 beta.
 
 * [Features](#features)
 * [Quick install](#quick-install)
@@ -20,7 +18,6 @@ Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://c
 - [x] Google Pagespeed filters support
 - [x] Well-looking error pages
 - [x] Full-page Varnish cache
-- [x] SSL/TLS encryption via Let's Encrypt
 - [x] Strong SSL preferencies (A+ by default on SSL Labs)
 - [x] Development environment based on [Vagrant](https://vagrantup.com)
 - [x] Configurations for creating your own images based on [Packer](https://packer.io)
@@ -73,12 +70,8 @@ Done. It works.
 
 Cartomatic will install for you the latest versions of following software:
 
-- [x] [Apache](http://httpd.apache.org)
-  - [x] FastCGI + suExec
-  - [ ] mod_php
+- [x] [Apache](http://httpd.apache.org) + mod_php
 - [x] [WEBKAOS](http://github.com/essentialkaos/webkaos)
-  - [x] As a HTTP reverse proxy
-  - [ ] As a FastCGI proxy
 - [x] [PHP](https://secure.php.net)
   - [x] 5.4.x
   - [x] 5.5.x
@@ -90,15 +83,12 @@ Cartomatic will install for you the latest versions of following software:
 - [x] [vsFTPd](https://security.appspot.com/vsftpd.html)
 - [x] [Varnish](https://www.varnish-cache.org)
 - [x] [phpMyAdmin](https://www.phpmyadmin.net)
-- [ ] [Fail2Ban](http://www.fail2ban.org/)
-- [ ] [OpenSSH](http://www.openssh.com)
 
 Please keep in mind that apps are still subject to change.
 
 #### Supported platforms
 
 * CentOS/RedHat/Scientific Linux 6 x86_64
-* CentOS/RedHat/Scientific Linux 7 x86_64
 
 #### Restrictions
 
