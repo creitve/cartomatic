@@ -1,0 +1,27 @@
+- name: copying firewall template
+  template:
+    src=etc/sysconfig/iptables.j2
+    dest=/etc/sysconfig/iptables
+  when: ansible_distribution_major_version == "6"
+  notify:
+    - iptables-load
+    - iptables-restart
+  tags:
+    - firewall
+
+- firewalld:
+    port={{ item }}
+    permanent=true
+    state=enabled
+  with_items:
+    - "20-21/tcp"
+    - "22/tcp"
+    - "80/tcp"
+    - "443/tcp"
+    - "60000-60032/tcp"
+  when: (ansible_distribution_major_version == "7")
+  notify:
+    - iptables-restart
+  tags:
+    - firewall
+

@@ -23,7 +23,7 @@
   yum:
     name={{ item }}
     state=latest
-  with_items: mariadb_packages
+  with_items: "{{ mariadb_packages }}"
   notify:
     - mariadb-enabled
   tags:
@@ -112,7 +112,7 @@
     db={{ item.value.database }}
     state=present
     login_user=root
-  with_dict: mariadb
+  with_dict: "{{ mariadb }}"
   when: (mariadb_stat.stat.exists == False)
   tags:
     - mariadb
@@ -123,7 +123,7 @@
     password={{ item.value.password }}
     priv={{ item.value.database }}.*:ALL
     login_user=root
-  with_dict: mariadb
+  with_dict: "{{ mariadb }}"
   when: (mariadb_stat.stat.exists == False)
   tags:
     - mariadb

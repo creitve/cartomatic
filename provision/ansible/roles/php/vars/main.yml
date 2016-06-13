@@ -1,10 +1,11 @@
 php_version_suffix: "{{ php_version|replace('.', '') }}"
+php_enablerepo: "remi,remi-php{{ php_version_suffix }}"
 
 php_packages:
-  - "php{{ php_version_suffix }}-curl"
-  - "php{{ php_version_suffix }}-gd"
-  - "php{{ php_version_suffix }}-mysql"
-  - "php{{ php_version_suffix }}-opcache"
-  - "php{{ php_version_suffix }}-pecl-imagick"
-  - "php{{ php_version_suffix }}-pecl-redis"
-  - "php{{ php_version_suffix }}-pecl-apcu"
+  - "php-curl"
+  - "php-gd"
+  - "php-mysql"
+  - "php-opcache"
+  - "php-pecl-imagick"
+  - "php-pecl-redis"
+  - "php-pecl-apcu"

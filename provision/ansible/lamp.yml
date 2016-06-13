@@ -6,14 +6,16 @@
   roles:
     - common
     - sudoers
+    - iptables
 
 - name: Application servers
   become: yes
   hosts: apps
   roles:
     - access
+    - varnish
     - nginx-proxy
-    - httpd
+    - mod_php
     - vsftpd
     - postfix
 

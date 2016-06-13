@@ -8,7 +8,7 @@
     owner=root
     group=root
   ignore_errors: true
-  with_dict: access
+  with_dict: "{{ access }}"
   tags:
     - access
 
@@ -17,7 +17,7 @@
     name={{ item.value.group | default(item.value.owner) }}
     state=present
     system=yes
-  with_dict: access
+  with_dict: "{{ access }}"
   tags:
     - access
 
@@ -29,7 +29,7 @@
     shell=/bin/bash
     state=present
     createhome=no
-  with_dict: access
+  with_dict: "{{ access }}"
   ignore_errors: true
   tags:
     - access
@@ -41,7 +41,7 @@
     mode=555
     owner={{ item.value.owner }}
     group={{ item.value.group | default(item.value.owner) }}
-  with_dict: access
+  with_dict: "{{ access }}"
   ignore_errors: true
   tags:
     - access

@@ -4,7 +4,22 @@
     state=latest
   notify:
     - nginx-enabled
-  with_items: nginx_packages
+  with_items: "{{ nginx_packages }}"
+  tags:
+    - nginx
+
+- name: loading configs
+  template:
+    src=etc/nginx/{{ item }}.j2
+    dest=/etc/nginx/{{ item }}
+  with_items:
+    - "xtra/error-40X.conf"
+    - "xtra/error-50X.conf"
+    - "xtra/proxy_params.conf"
+    - "xtra/proxy_params_ssl.conf"
+    - "xtra/ssl.conf"
+  notify:
+    - nginx-restarted
   tags:
     - nginx
 
@@ -12,10 +27,10 @@
   file:
     path={{ nginx_logdir }}/{{ item.key }}
     mode=0755
-    owner=nginx
-    group=root
+    owner={{ nginx_service_user }}
+    group={{ nginx_service_group }}
     state=directory
     recurse=yes
-  with_dict: projects
+  with_dict: "{{ projects }}"
   tags:
     - nginx

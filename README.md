@@ -1,50 +1,49 @@
-About
------
+## About
 
-Work in progress. Please **DO NOT** use this software for settings up production servers.
+Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0.
 
-Scenarious which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0 alpha.
+* [Features](#features)
+* [Quick install](#quick-install)
+* [Manual install](#manual-install)
+* [Components](#components)
+* [Supported platforms](#supported-platforms)
+* [Restrictions](#restrictions)
+* [License](#license)
 
-[![Cartomatic](https://raw.githubusercontent.com/simtechdev/cartomatic/master/cartomatic.png)](https://cs-cart.com)
-
-Features
---------
+#### Features
 
 - [x] HTTP/2 support
 - [x] Performance tuning for highload
 - [x] Deflate/GZIP compression
 - [x] Google Pagespeed filters support
 - [x] Well-looking error pages
-- [ ] Full-page Varnish cache
-- [x] SSL/TLS encryption via Let's Encrypt
+- [x] Full-page Varnish cache
 - [x] Strong SSL preferencies (A+ by default on SSL Labs)
 - [x] Development environment based on [Vagrant](https://vagrantup.com)
 - [x] Configurations for creating your own images based on [Packer](https://packer.io)
 
-Quick install
--------------
+#### Quick install
 
 Log in to your server as superuser (root) via SSH and execute this command:
 
 ```
-export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/cscart/server-ansible-playbooks/master/provision/shell/cartomatic-installer | bash -s -- yourdomain.tld
+export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/simtechdev/cartomatic/master/provision/shell/cartomatic-installer | bash -s -- yourdomain.tld
 ```
 
 Done. It works.
 
-Manual install
---------------
+#### Manual install
 
 1. Log in to your server as superuser (root) via SSH and execute this command.
 
     ```
-    curl -sL https://raw.githubusercontent.com/cscart/server-ansible-playbooks/master/provision/shell/cartomatic-installer | bash -s
+    curl -sL https://raw.githubusercontent.com/simtechdev/cartomatic/master/provision/shell/cartomatic-installer | bash -s
     ```
 
 2. Clone repository into the workspace.
 
    ```
-   git clone https://github.com/cscart/server-ansible-playbooks
+   git clone https://github.com/simtechdev/cartomatic
    ```
 
 3. Switch to the `provision/ansible` directory.
@@ -67,45 +66,35 @@ Manual install
 
     Passwords will be saved in the `credentials` folder.
 
-Components
-----------
+#### Components
 
 Cartomatic will install for you the latest versions of following software:
 
-- [x] [Apache](http://httpd.apache.org)
-  - [x] FastCGI + suExec
-  - [ ] mod_php
-- [x] [Nginx](http://nginx.org)
-  - [x] As a HTTP reverse proxy
-  - [ ] As a FastCGI proxy
+- [x] [Apache](http://httpd.apache.org) + mod_php
+- [x] [WEBKAOS](http://github.com/essentialkaos/webkaos)
 - [x] [PHP](https://secure.php.net)
+  - [x] 5.4.x
+  - [x] 5.5.x
   - [x] 5.6.x
-  - [ ] 7.0.x
+  - [x] 7.0.x
 - [x] [MariaDB](https://mariadb.com)
 - [x] [Redis](http://redis.io)
 - [x] [Postfix](http://www.postfix.org)
 - [x] [vsFTPd](https://security.appspot.com/vsftpd.html)
-- [ ] [Varnish](https://www.varnish-cache.org)
-- [x] [lego](https://github.com/xenolf/lego)
-- [ ] [phpMyAdmin](https://www.phpmyadmin.net)
-- [ ] [Fail2Ban](http://www.fail2ban.org/)
-- [ ] [OpenSSH](http://www.openssh.com)
+- [x] [Varnish](https://www.varnish-cache.org)
+- [x] [phpMyAdmin](https://www.phpmyadmin.net)
 
 Please keep in mind that apps are still subject to change.
 
-Supported platforms
--------------------
+#### Supported platforms
 
-* CentOS 6 x86_64
-* CentOS 7 x86_64
+* CentOS/RedHat/Scientific Linux 6 x86_64
 
-Restrictions
-------------
+#### Restrictions
 
 * Not compatible with ISPManager, cPanel, Plesk etc.
 * Works well only for clean installations.
 
-License
--------
+#### License
 
 MIT

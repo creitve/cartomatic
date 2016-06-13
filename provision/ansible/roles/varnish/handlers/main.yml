@@ -1,0 +1,20 @@
+- name: varnish-enabled
+  service:
+    name={{ varnish_service }}
+    enabled=yes
+
+- name: varnish-started
+  service:
+    name={{ varnish_service }}
+    state=started
+
+- name: varnish-restarted
+  service:
+    name={{ varnish_service }}
+    state=restarted
+
+- name: varnish-stopped
+  service:
+    name={{ varnish_service }}
+    state=stopped
+

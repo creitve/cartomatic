@@ -1,2 +1,0 @@
-lego_path: /etc/lego
-lego_certpath: "{{ lego_path }}/certificates"

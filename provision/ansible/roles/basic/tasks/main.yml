@@ -1,9 +1,38 @@
 ---
 
+- name: installing EPEL
+  yum:
+    name=epel-release
+    state=latest
+  tags:
+    - basic
+
+- name: installing needed packages
+  yum:
+    name={{ item }}
+    state=installed
+  when: ansible_distribution_major_version == "6"
+  with_items:
+    - python2-ndg_httpsclient
+  tags:
+    - basic
+
+- name: installing needed packages
+  yum: 
+    name={{ item }}
+    state=installed
+  with_items:
+    - python-urllib3
+    - pyOpenSSL
+    - python-pyasn1
+  tags:
+    - basic
+
 - name: installing repositories
   yum:
     name={{ item }}
     state=installed
-  with_items: basic_packages
+  with_items: "{{ basic_packages }}"
   tags:
     - basic
+
