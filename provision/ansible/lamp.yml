@@ -14,7 +14,7 @@
   roles:
     - access
     - nginx-proxy
-    - httpd
+    - mod_php
     - vsftpd
     - postfix
 

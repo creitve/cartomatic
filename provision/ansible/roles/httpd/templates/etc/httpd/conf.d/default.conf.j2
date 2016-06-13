@@ -1,4 +1,4 @@
-<VirtualHost *:{{ httpd_port }}>
+<VirtualHost {{ httpd_bind }}:{{ httpd_port }}>
     ServerAdmin root@localhost
 
     ServerName {{ item.key }}
@@ -20,13 +20,6 @@
     LogLevel warn
 
     {{ "DocumentRoot %s/%s/public_html"|format(global.prefix, item.key) }}
-
-    <IfModule mod_proxy_fcgi.c>
-        {{ "ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://%s%s/%s/public_html/$1"|
-            format(php_fpm[item.key]['listen'], global.prefix, item.key) }}
-        SuexecUserGroup {{ item.value.owner|default(php_fpm_owner) }} {{ item.value.group|default(php_fpm_group) }}
-        DirectoryIndex /index.php index.php
-    </IfModule>
 
     <Directory />
         Options -Indexes +MultiViews +FollowSymlinks +SymLinksIfOwnerMatch +IncludesNoExec

@@ -10,8 +10,10 @@
 
 - name: creating extra folder
   file:
-    path=/etc/httpd/conf/extra
+    path=/etc/httpd/{{ item }}
     state=directory
+  with_items:
+    - conf/extra
   tags:
     - httpd
 
