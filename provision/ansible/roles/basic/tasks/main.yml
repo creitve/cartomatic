@@ -8,13 +8,22 @@
     - basic
 
 - name: installing needed packages
+  yum:
+    name={{ item }}
+    state=installed
+  when: ansible_distribution_major_version == "6"
+  with_items:
+    - python2-ndg_httpsclient
+  tags:
+    - basic
+
+- name: installing needed packages
   yum: 
     name={{ item }}
     state=installed
   with_items:
     - python-urllib3
     - pyOpenSSL
-    - python2-ndg_httpsclient
     - python-pyasn1
   tags:
     - basic

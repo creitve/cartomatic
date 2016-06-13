@@ -13,6 +13,7 @@
   hosts: apps
   roles:
     - access
+    - varnish
     - nginx-proxy
     - mod_php
     - vsftpd

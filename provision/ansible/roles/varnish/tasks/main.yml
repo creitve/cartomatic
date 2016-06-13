@@ -1,0 +1,10 @@
+- name: installing varnish
+  yum:
+    name={{ item }}
+    state=installed
+  with_dict: "{{ varnish_packages }}"
+  notify:
+    - varnish-enabled
+    - varnish-restarted
+  tags:
+    - varnish

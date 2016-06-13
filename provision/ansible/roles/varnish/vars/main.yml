@@ -1,0 +1,4 @@
+varnish_packages:
+  - varnish
+
+varnish_service: varnish
