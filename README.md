@@ -88,7 +88,7 @@ Please keep in mind that apps are still subject to change.
 
 #### Supported platforms
 
-* CentOS/RedHat/Scientific Linux 6 x86_64
+* CentOS / RedHat / Scientific Linux 6 x86_64
 
 #### Restrictions
 
