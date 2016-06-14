@@ -3,7 +3,7 @@
 Installation
 ------------
 
-See ["Manual install"](https://github.com/gongled/cartomatic/tree/master#manual-install).
+See ["Manual install"](https://github.com/simtechdev/cartomatic/tree/master#manual-install).
 
 Testing
 -------
@@ -15,4 +15,4 @@ bash tests/ansible-validate
 bash tests/packer-validate
 ```
 
-If so, you can start work with the project. Please [report any bugs you find](https://github.com/gongled/cartomatic/issues/new)!
+If so, you can start work with the project. Please [report any bugs you find](https://github.com/simtechdev/cartomatic/issues/new)!
