@@ -10,6 +10,7 @@ Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor
       * [Building your own image](#building-your-own-image)
       * [Supported platforms](#supported-platforms)
       * [Restrictions](#restrictions)
+      * [Status](#status)
       * [License](#license)
 
 #### Features
@@ -157,6 +158,13 @@ We use [Packer](https://packer.io) configurations for building Vagrant images.
 
 * Not compatible with ISPManager, cPanel, Plesk etc.
 * Works well only for clean installations.
+
+#### Status 
+
+| Repository | Status |
+|------------|--------|
+| Stable | [![Build Status](https://travis-ci.org/simtechdev/cartomatic.svg?branch=master)](https://travis-ci.org/simtechdev/cartomatic) |
+| Unstable | [![Build Status](https://travis-ci.org/simtechdev/cartomatic.svg?branch=develop)](https://travis-ci.org/simtechdev/cartomatic) |
 
 #### License
 
