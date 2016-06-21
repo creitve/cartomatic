@@ -6,8 +6,14 @@ Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor
       * [Features](#features)
       * [Components](#components)
       * [Running in production](#running-in-production)
+          * [Quick start](#quick-start)
+          * [Advanced](#advanced)
       * [Running on virtual machine](#running-on-virtual-machine)
+          * [Requirements](#requirements)
+          * [Usage](#usage)
       * [Building your own image](#building-your-own-image)
+          * [Requirements](#requirements)
+          * [Usage](#usage)
       * [Supported platforms](#supported-platforms)
       * [Restrictions](#restrictions)
       * [Status](#status)
@@ -98,6 +104,15 @@ Done. It works.
 Cartomatic well-works not only on production – you can use it for development or
 testing purposes using virtual machines which managed by [Vagrant](https://vagrantup.com).
 
+###### Requirements
+
+- [Ansible](http://docs.ansible.com/) 1.9+
+- [VirtualBox](https://virtualbox.org/) 5.0+
+- [Vagrant](https://vagrantup.com/) 1.8+
+- [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) plugin
+
+###### Usage
+
 1. Switch to the `dev/` directory.
 
 2. Specify parameters into the 'config.yml' settings file:
@@ -130,6 +145,13 @@ testing purposes using virtual machines which managed by [Vagrant](https://vagra
 #### Building your own image
 
 We use [Packer](https://packer.io) configurations for building Vagrant images.
+
+###### Requirements
+
+- [Packer](https://packer.io) 0.9+
+- [VirtualBox](https://virtualbox.org/) 5.0+
+
+###### Usage
 
 1. Switch to `build/` directory.
 
