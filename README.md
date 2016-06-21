@@ -6,7 +6,7 @@ Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor
       * [Features](#features)
       * [Components](#components)
       * [Running in production](#running-in-production)
-          * [Quick start](#quick-start)
+          * [Basic](#basic)
           * [Advanced](#advanced)
       * [Running on virtual machine](#running-on-virtual-machine)
           * [Requirements](#requirements)
@@ -55,7 +55,7 @@ Please keep in mind that apps are still subject to change.
 
 If you already have your VPS/VDS and you want to try `cartomatic` in action, you should do following things:
 
-###### Quick start
+###### Basic
 
 Log in to your server as superuser (root) via SSH and execute this command:
 
