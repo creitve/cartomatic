@@ -1,12 +1,17 @@
 language: bash
+dist: trusty
 
 cache: apt
 
 before_install:
-  - echo "deb http://us.archive.ubuntu.com/ubuntu vivid main universe" | sudo tee -a /etc/apt/sources.list
+  - echo "deb http://us.archive.ubuntu.com/ubuntu trusty main universe" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update -qq
-  - sudo apt-get install -y ansible-lint ansible packer
+  - sudo apt-get install -y python-dev
+  - sudo apt-get remove -y python-openssl
+  - sudo pip install -U pip
+  - sudo pip install pyopenssl
+  - sudo pip install ansible
+  - sudo pip install ansible-lint
 
 script:
-  - bash tests/packer-validate
   - bash tests/ansible-validate

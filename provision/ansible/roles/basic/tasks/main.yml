@@ -18,7 +18,7 @@
     - basic
 
 - name: installing needed packages
-  yum: 
+  yum:
     name={{ item }}
     state=installed
   with_items:

@@ -4,7 +4,7 @@
   file:
     path="{{ '%s/%s/public_html'|format(global.prefix, item.key) }}"
     state=directory
-    mode=755
+    mode=0755
     owner=root
     group=root
   ignore_errors: true
@@ -38,7 +38,7 @@
   file:
     path="{{ '%s/%s'|format(global.prefix, item.key) }}"
     state=directory
-    mode=555
+    mode=0555
     owner={{ item.value.owner }}
     group={{ item.value.group | default(item.value.owner) }}
   with_dict: "{{ access }}"

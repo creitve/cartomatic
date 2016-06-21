@@ -19,7 +19,7 @@
   template:
     src=main.cf.j2
     dest=/etc/postfix/main.cf
-  notify: 
+  notify:
     - postfix-restarted
   tags:
     - mail
