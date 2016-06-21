@@ -5,8 +5,9 @@ cache: apt
 before_install:
   - echo "deb http://us.archive.ubuntu.com/ubuntu vivid main universe" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update -qq
-  - sudo apt-get install -y ansible-lint ansible packer
+  - sudo apt-get install -y ansible
+  - sudo apt-get install -y python-pip
+  - sudo pip install ansible-lint
 
 script:
-  - bash tests/packer-validate
   - bash tests/ansible-validate
