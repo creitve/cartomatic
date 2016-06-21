@@ -22,7 +22,31 @@ Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor
 - [x] Development environment based on [Vagrant](https://vagrantup.com)
 - [x] Configurations for creating your own images based on [Packer](https://packer.io)
 
-#### Quick install
+#### Components
+
+Cartomatic will install for you the latest versions of following software:
+
+- [x] [Apache](http://httpd.apache.org) + mod_php
+- [x] [WEBKAOS](http://github.com/essentialkaos/webkaos)
+- [x] [PHP](https://secure.php.net)
+  - [x] 5.4.x
+  - [x] 5.5.x
+  - [x] 5.6.x
+  - [x] 7.0.x
+- [x] [MariaDB](https://mariadb.com)
+- [x] [Redis](http://redis.io)
+- [x] [Postfix](http://www.postfix.org)
+- [x] [vsFTPd](https://security.appspot.com/vsftpd.html)
+- [x] [Varnish](https://www.varnish-cache.org)
+- [x] [phpMyAdmin](https://www.phpmyadmin.net)
+
+Please keep in mind that apps are still subject to change.
+
+#### Running in production 
+
+If you already have your VPS/VDS and you want to try `cartomatic` in action, you should do following things:
+
+###### Quick start
 
 Log in to your server as superuser (root) via SSH and execute this command:
 
@@ -32,7 +56,7 @@ export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/simtechd
 
 Done. It works.
 
-#### Manual install
+###### Advanced 
 
 1. Log in to your server as superuser (root) via SSH and execute this command.
 
@@ -66,25 +90,62 @@ Done. It works.
 
     Passwords will be saved in the `credentials` folder.
 
-#### Components
+#### Running on virtual machine
 
-Cartomatic will install for you the latest versions of following software:
+Cartomatic well-works not only on production – you can use it for development or
+testing purposes using virtual machines which managed by [Vagrant](https://vagrantup.com).
 
-- [x] [Apache](http://httpd.apache.org) + mod_php
-- [x] [WEBKAOS](http://github.com/essentialkaos/webkaos)
-- [x] [PHP](https://secure.php.net)
-  - [x] 5.4.x
-  - [x] 5.5.x
-  - [x] 5.6.x
-  - [x] 7.0.x
-- [x] [MariaDB](https://mariadb.com)
-- [x] [Redis](http://redis.io)
-- [x] [Postfix](http://www.postfix.org)
-- [x] [vsFTPd](https://security.appspot.com/vsftpd.html)
-- [x] [Varnish](https://www.varnish-cache.org)
-- [x] [phpMyAdmin](https://www.phpmyadmin.net)
+1. Switch to the `dev/` directory.
 
-Please keep in mind that apps are still subject to change.
+2. Specify parameters into the 'config.yml' settings file:
+
+    ```
+    vms:
+      centos6:
+        box: centos6
+        box_url: https://vagrant.smtk.us/centos/6/centos6.box
+        ip: 10.0.0.10
+
+    provision:
+      ansible:
+        playbook: "../provision/ansible/lamp.yml"
+        extra_vars: "../provision/ansible/config/manual.json"
+    ```
+
+    You should specify amount of VMs which you want to launch for provisioning.
+    Please read [the instruction for building images](../build/README.md) if you want to
+    create your own image instead of using self-hosted images.
+
+3. Run vagrant:
+
+    ```
+    vagrant up
+    ```
+
+    Please wait. It may takes from 5 to 15 minutes.
+
+#### Building your own image
+
+We use [Packer](https://packer.io) configurations for building Vagrant images.
+
+1. Switch to `build/` directory.
+
+2. Execute this command to build your own image:
+
+    CentOS 6 x86_64
+    ```
+    packer build centos6.json
+    ```
+
+    Please wait. It takes from 15 to 30 minutes. Done.
+
+3. Add the resulting image into Vagrant using following command:
+
+    ```
+    vagrant box add NAME images/IMAGE_NAME.box
+    ```
+
+    In some cases you need to know root-password. Here it is: `test123!`
 
 #### Supported platforms
 
