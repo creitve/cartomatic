@@ -1,6 +1,6 @@
 ## About
 
-Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0.
+Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.1.
 
   * [About](#about)
       * [Features](#features)
