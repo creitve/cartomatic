@@ -15,17 +15,11 @@ How to use
         box: centos6
         box_url: https://vagrant.smtk.us/centos/6/centos6.box
         ip: 10.0.0.10
-      centos7:
-        box: centos7
-        box_url: https://vagrant.smtk.us/centos/7/centos7.box
-        ip: 10.0.0.11
 
     provision:
       ansible:
         playbook: "../provision/ansible/lamp.yml"
         extra_vars: "../provision/ansible/config/manual.json"
-        tags:
-          - access
     ```
 
     You should specify amount of VMs which you want to launch for provisioning.
