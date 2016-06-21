@@ -5,7 +5,7 @@ cache: apt
 before_install:
   - echo "deb http://us.archive.ubuntu.com/ubuntu vivid main universe" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update -qq
-  - sudo apt-get install -y ansible
+  - sudo apt-get install -y ansible gcc-c++ make
   - sudo apt-get install -y python-pip
   - sudo apt-get remove -y python-openssl
   - sudo pip install -U pip
