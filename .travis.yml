@@ -1,11 +1,16 @@
 language: bash
+dist: trusty
 
 cache: apt
 
 before_install:
-  - echo "deb http://us.archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
+  - echo "deb http://us.archive.ubuntu.com/ubuntu trusty main universe" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update -qq
-  - sudo apt-get install -y ansible ansible-lint
+  - sudo apt-get install -y ansible
+  - sudo apt-get remove -y python-openssl
+  - sudo pip install -U pip
+  - sudo pip install pyopenssl
+  - sudo pip install ansible-lint
 
 script:
   - bash tests/ansible-validate
