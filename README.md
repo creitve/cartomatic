@@ -2,13 +2,15 @@
 
 Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0.
 
-* [Features](#features)
-* [Quick install](#quick-install)
-* [Manual install](#manual-install)
-* [Components](#components)
-* [Supported platforms](#supported-platforms)
-* [Restrictions](#restrictions)
-* [License](#license)
+  * [About](#about)
+      * [Features](#features)
+      * [Components](#components)
+      * [Running in production](#running-in-production)
+      * [Running on virtual machine](#running-on-virtual-machine)
+      * [Building your own image](#building-your-own-image)
+      * [Supported platforms](#supported-platforms)
+      * [Restrictions](#restrictions)
+      * [License](#license)
 
 #### Features
 
