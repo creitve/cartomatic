@@ -4,7 +4,7 @@
   template:
     src={{ item.tmpl }}.j2
     dest=/{{ item.tmpl }}
-    mode=440
+    mode=0440
     owner=root
     group=root
     validate='visudo -cf %s'
@@ -18,7 +18,7 @@
   template:
     src={{ item.tmpl }}.j2
     dest=/{{ item.tmpl }}
-    mode=440
+    mode=0440
     owner=root
     group=root
     validate='visudo -cf %s'
