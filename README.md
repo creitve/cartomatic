@@ -1,13 +1,23 @@
 ## About
 
+<<<<<<< HEAD
 Open-source scenarios to help you setup [CS-Cart and Multi-Vendor](https://cs-cart.com/) servers. Current version is 1.0.0.
+=======
+Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.1.
+>>>>>>> 2399ac3cd6c84f77a4f1aa85d2ed8437b50edd36
 
   * [About](#about)
       * [Features](#features)
       * [Components](#components)
       * [Running in production](#running-in-production)
+          * [Basic](#basic)
+          * [Advanced](#advanced)
       * [Running on virtual machine](#running-on-virtual-machine)
+          * [Requirements](#requirements)
+          * [Usage](#usage)
       * [Building your own image](#building-your-own-image)
+          * [Requirements](#requirements)
+          * [Usage](#usage)
       * [Supported platforms](#supported-platforms)
       * [Restrictions](#restrictions)
       * [Status](#status)
@@ -49,7 +59,7 @@ Please keep in mind that apps are still subject to change.
 
 If you already have your VPS/VDS and you want to try `cartomatic` in action, follow these steps:
 
-###### Quick start
+###### Basic
 
 Log in to your server as superuser (root) via SSH and execute this command:
 
@@ -98,6 +108,15 @@ Done. It works.
 Cartomatic not only covers your production needs, but can also ease your development and
 testing workflow with virtual machines and [Vagrant](https://vagrantup.com).
 
+###### Requirements
+
+- [Ansible](http://docs.ansible.com/) 1.9+
+- [VirtualBox](https://virtualbox.org/) 5.0+
+- [Vagrant](https://vagrantup.com/) 1.8+
+- [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) plugin
+
+###### Usage
+
 1. Switch to the `dev/` directory.
 
 2. Specify parameters in the 'config.yml' settings file:
@@ -130,6 +149,13 @@ testing workflow with virtual machines and [Vagrant](https://vagrantup.com).
 #### Building your own image
 
 We use [Packer](https://packer.io) configurations to build Vagrant images.
+
+###### Requirements
+
+- [Packer](https://packer.io) 0.9+
+- [VirtualBox](https://virtualbox.org/) 5.0+
+
+###### Usage
 
 1. Switch to `build/` directory.
 
