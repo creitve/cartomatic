@@ -1,6 +1,6 @@
 ## About
 
-Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor](https://cs-cart.com/). Current version is 1.0.0.
+Open-source scenarios to help you setup [CS-Cart and Multi-Vendor](https://cs-cart.com/) servers. Current version is 1.0.0.
 
   * [About](#about)
       * [Features](#features)
@@ -27,7 +27,7 @@ Open-source scenarios which helps you setup server for [CS-Cart and Multi-Vendor
 
 #### Components
 
-Cartomatic will install for you the latest versions of following software:
+Cartomatic will install the latest versions of the following software for you:
 
 - [x] [Apache](http://httpd.apache.org) + mod_php
 - [x] [WEBKAOS](http://github.com/essentialkaos/webkaos)
@@ -45,9 +45,9 @@ Cartomatic will install for you the latest versions of following software:
 
 Please keep in mind that apps are still subject to change.
 
-#### Running in production 
+#### Running in production
 
-If you already have your VPS/VDS and you want to try `cartomatic` in action, you should do following things:
+If you already have your VPS/VDS and you want to try `cartomatic` in action, follow these steps:
 
 ###### Quick start
 
@@ -59,7 +59,7 @@ export CARTOMATIC_AUTO=true; curl -sL https://raw.githubusercontent.com/simtechd
 
 Done. It works.
 
-###### Advanced 
+###### Advanced
 
 1. Log in to your server as superuser (root) via SSH and execute this command.
 
@@ -95,12 +95,12 @@ Done. It works.
 
 #### Running on virtual machine
 
-Cartomatic well-works not only on production – you can use it for development or
-testing purposes using virtual machines which managed by [Vagrant](https://vagrantup.com).
+Cartomatic covers not only your production needs, but can also ease your development and
+testing workflow with virtual machines and [Vagrant](https://vagrantup.com).
 
 1. Switch to the `dev/` directory.
 
-2. Specify parameters into the 'config.yml' settings file:
+2. Specify parameters in the 'config.yml' settings file:
 
     ```
     vms:
@@ -115,8 +115,8 @@ testing purposes using virtual machines which managed by [Vagrant](https://vagra
         extra_vars: "../provision/ansible/config/manual.json"
     ```
 
-    You should specify amount of VMs which you want to launch for provisioning.
-    Please read [the instruction for building images](../build/README.md) if you want to
+    Define as much VMs as you want to provision here.
+    Take a look at [the instruction for building images](../build/README.md) if you want to
     create your own image instead of using self-hosted images.
 
 3. Run vagrant:
@@ -125,11 +125,11 @@ testing purposes using virtual machines which managed by [Vagrant](https://vagra
     vagrant up
     ```
 
-    Please wait. It may takes from 5 to 15 minutes.
+    Provision can take from 5 to 15 minutes per machine.
 
 #### Building your own image
 
-We use [Packer](https://packer.io) configurations for building Vagrant images.
+We use [Packer](https://packer.io) configurations to build Vagrant images.
 
 1. Switch to `build/` directory.
 
@@ -140,15 +140,15 @@ We use [Packer](https://packer.io) configurations for building Vagrant images.
     packer build centos6.json
     ```
 
-    Please wait. It takes from 15 to 30 minutes. Done.
+    Wait until it is over. It normally takes 15 to 30 minutes to finish.
 
-3. Add the resulting image into Vagrant using following command:
+3. Add the resulting image into Vagrant using the following command:
 
     ```
     vagrant box add NAME images/IMAGE_NAME.box
     ```
 
-    In some cases you need to know root-password. Here it is: `test123!`
+    In some cases you need to know root password. Here it is: `test123!`
 
 #### Supported platforms
 
@@ -159,7 +159,7 @@ We use [Packer](https://packer.io) configurations for building Vagrant images.
 * Not compatible with ISPManager, cPanel, Plesk etc.
 * Works well only for clean installations.
 
-#### Status 
+#### Status
 
 | Repository | Status |
 |------------|--------|
