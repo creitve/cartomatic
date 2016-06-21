@@ -95,7 +95,7 @@ Done. It works.
 
 #### Running on virtual machine
 
-Cartomatic covers not only your production needs, but can also ease your development and
+Cartomatic not only covers your production needs, but can also ease your development and
 testing workflow with virtual machines and [Vagrant](https://vagrantup.com).
 
 1. Switch to the `dev/` directory.
@@ -115,9 +115,9 @@ testing workflow with virtual machines and [Vagrant](https://vagrantup.com).
         extra_vars: "../provision/ansible/config/manual.json"
     ```
 
-    Define as much VMs as you want to provision here.
+    Define as much VMs as you need to create and provision here.
     Take a look at [the instruction for building images](../build/README.md) if you want to
-    create your own image instead of using self-hosted images.
+    create your own image instead of using self-hosted ones.
 
 3. Run vagrant:
 
@@ -125,7 +125,7 @@ testing workflow with virtual machines and [Vagrant](https://vagrantup.com).
     vagrant up
     ```
 
-    Provision can take from 5 to 15 minutes per machine.
+    Provisioning can take from 5 to 15 minutes per machine.
 
 #### Building your own image
 
@@ -148,7 +148,7 @@ We use [Packer](https://packer.io) configurations to build Vagrant images.
     vagrant box add NAME images/IMAGE_NAME.box
     ```
 
-    In some cases you need to know root password. Here it is: `test123!`
+    In some cases you might require the root password, which is `test123!`.
 
 #### Supported platforms
 
